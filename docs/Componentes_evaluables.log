@@ -1,0 +1,255 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.3.29)  4 APR 2023 21:51
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Componentes_evaluables.tex
+(./Componentes_evaluables.tex
+LaTeX2e <2020-02-02> patch level 2
+L3 programming layer <2020-02-14>
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\c@figure=\count173
+\c@table=\count174
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+)
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2020/02/14 3.40 The Babel package
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/switch.def
+File: switch.def 2020/02/14 3.40 Babel switching mechanism
+)
+
+! Package babel Error: Unknown option `spanish'. Either you misspelled it
+(babel)                or the language definition file spanish.ldf was not foun
+d.
+
+See the babel package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.542 \ProcessOptions*
+                      
+Valid options are: shorthands=, KeepShorthandsActive,
+activeacute, activegrave, noconfigs, safe=, main=, math=
+headfoot=, strings=, config=, hyphenmap=, or a language name.
+
+Package babel Info: You haven't specified a language. I'll use 'nil'
+(babel)             as the main language. Reported on input line 572.
+(/usr/share/texlive/texmf-dist/tex/generic/babel/nil.ldf
+Language: nil 2020/02/14 3.40 Nil language
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2020/02/14 3.40 Babel common definitions
+\babel@savecnt=\count175
+\U@D=\dimen135
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count176
+)
+\l@nil=\language5
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen136
+\Gin@req@width=\dimen137
+)
+(/usr/share/texlive/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip49
+\subfigcapskip=\skip50
+\subfigcaptopadj=\dimen138
+\subfigbottomskip=\skip51
+\subfigcapmargin=\dimen139
+\subfiglabelskip=\skip52
+\c@subfigure=\count177
+\c@lofdepth=\count178
+\c@subtable=\count179
+\c@lotdepth=\count180
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texlive/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip53
+\subfig@bottom=\skip54
+)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen140
+\ar@mcellbox=\box45
+\extrarowheight=\dimen141
+\NC@list=\toks17
+\extratabsurround=\skip55
+\backup@length=\skip56
+\ar@cellbox=\box46
+)
+\TX@col@width=\dimen142
+\TX@old@table=\dimen143
+\TX@old@col=\dimen144
+\TX@target=\dimen145
+\TX@delta=\dimen146
+\TX@cols=\count181
+\TX@ftn=\toks18
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count182
+\l__pdf_internal_box=\box47
+)
+(./Componentes_evaluables.aux)
+\openout1 = `Componentes_evaluables.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count183
+\scratchdimen=\dimen147
+\scratchbox=\box48
+\nofMPsegments=\count184
+\nofMParguments=\count185
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count186
+\MPscratchDim=\dimen148
+\MPnumerator=\count187
+\makeMPintoPDFobject=\count188
+\everyMPtoPDFconversion=\toks20
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (7.77832pt too wide) in paragraph at lines 28--29
+\OT1/cmr/m/n/10 El objetivo de este documento es evaluar distintos aspectos con
+ el fin de determinar
+ []
+
+
+Overfull \hbox (3.33398pt too wide) in paragraph at lines 28--29
+\OT1/cmr/m/n/10 que medidores, valores ambientales y condiciones poder evaluar 
+de una habitaci^^Son
+ []
+
+[1
+
+] [2
+
+]
+Overfull \hbox (19.02837pt too wide) in paragraph at lines 83--84
+\OT1/cmr/m/n/10 cerrado de ventilaci^^Son, el cu^^Sal lleva un sistema que, de 
+manera autom^^Satica,
+ []
+
+
+Overfull \hbox (6.2505pt too wide) in paragraph at lines 90--91
+[]\OT1/cmr/m/n/10 Se controla por medio de higr^^Sometros que se encuentran en 
+las unidades
+ []
+
+
+Overfull \hbox (3.0839pt too wide) in paragraph at lines 101--102
+[]\OT1/cmr/m/n/10 Los niveles de di^^Soxido de carbono m^^Saximos recomendados 
+en interiores
+ []
+
+
+Overfull \hbox (33.36168pt too wide) in paragraph at lines 107--108
+[]\OT1/cmr/m/n/10 Tiene distintas procedencias que pueden generar varios sintom
+as perjudiciales
+ []
+
+[3
+
+]
+Overfull \hbox (15.6672pt too wide) in paragraph at lines 127--128
+\OT1/cmr/m/n/10 zonas sensibles del aparato respiratorio con riesgo a agravar e
+nfermedades
+ []
+
+[4] (./Componentes_evaluables.aux) ) 
+Here is how much of TeX's memory you used:
+ 2111 strings out of 483140
+ 30072 string characters out of 5965151
+ 273513 words of memory out of 5000000
+ 17140 multiletter control sequences out of 15000+600000
+ 535489 words of font info for 34 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 30i,4n,26p,304b,282s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/mauron/.texlive2019/texmf-var/fonts
+/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+>
+Output written on Componentes_evaluables.pdf (5 pages, 77244 bytes).
+PDF statistics:
+ 51 PDF objects out of 1000 (max. 8388607)
+ 34 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
