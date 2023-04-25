@@ -1,0 +1,63 @@
+\chapter{Estado del arte.}
+
+En esta sección se quiere ver en anteriores proyectos, cómo se plantearon los problemas a resolver, de qué manera se hicieron las mediciones del estado ambiental del aire u otros elementos que permitan determinar las condiciones óptimas para las habitaciones de hospitales. 
+\vskip 0.1in
+En lugar de redactar cada uno de los distintos trabajos o artículos que se van a analizar (sacados de Google scholar), se hará una tabla comparativa en la que se irán diferenciando por cada columna, cuál ha sido lo más usado para hacer el estudio en cada situación.
+\vskip 0.1in
+Se añadirá de igual modo una breve descripción de cada trabajo, ya que queremos saber también cómo se quería plantear el problema de poder medir el estado ambiental de una habitación de hospital o zonas de hospitales en general, saber qué parámetros tienen en cuenta, dispositivos, rangos para poder determinar el estado de cada elemento analizado. 
+\vskip 0.1in
+Por otro lado, se quiere saber de cada estudio, qué han tenido en cuenta, si han tratado de arreglar o mejorar el estado de las enfermedades de los pacientes, si han tomado alguna acción una vez obtenido los resultados.
+
+%\begin{table}[htbp]
+\renewcommand{\arraystretch}{1.5} 
+\begin{table}[htbp]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Cita}} & \multicolumn{1}{|c|}{\textbf{Hospital}} & \multicolumn{1}{c|}{\textbf{Elemento}} & \multicolumn{1}{c|}{\textbf{Rango}}  & \multicolumn{1}{c|}{\textbf{Medidor}} & \multicolumn{1}{c|}{\textbf{Ref}} \\ \hline
+\multicolumn{1}{|c|}{\cite{9657663}} & \multicolumn{1}{c|}{N/A}  & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Humedad\\ Temperatura\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}$40-60\%$\\ $ 18-22^\circ C $\end{tabular}}
+  & \multicolumn{1}{c|}{DHT11}  & \multicolumn{1}{c|}{0} \\ \hline
+
+\multicolumn{1}{|c|}{\cite{PALMISANI2021108237}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Pediátrico\\ Barcelona\end{tabular}}  & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}$PM2.5$\end{tabular}} & \multicolumn{1}{c|}{$15-55  \mu g/m^3$}  & \begin{tabular}[c]{@{}l@{}}Speck DSM \\501 Series\end{tabular}  & \multicolumn{1}{c|}{1} \\ \hline
+
+
+\multicolumn{1}{|c|}{\cite{soehospital}} & \multicolumn{1}{c|}{N/A}  & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Humedad\\ Temperatura\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}$40-60\%$\\ $ 18-22^\circ C $\end{tabular}}  & \multicolumn{1}{c|}{DHT11}  & \multicolumn{1}{c|}{2} \\ \hline
+
+\multicolumn{1}{|c|}{\cite{8619934}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Nakhonnayok\\ Tailandia\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Humedad\\ Temperatura\\ TOV\\ $CO_2$\end{tabular}} & {\begin{tabular}[c]{@{}c@{}}$ 23-24^\circ C $\\ $40-60\%$\\ $0-2.5ppb$\\ $400-420ppm$\end{tabular}}  & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}BME680\\ CCS811\end{tabular}}  & \multicolumn{1}{c|}{3} \\ \hline
+
+\multicolumn{1}{|c|}{\cite{ijerph191912207}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Chile\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Humedad\\ Temperatura\\ TOV\\ $CO_2$\\ $PM2.5$\\ $C_2H_5OH$\\ $CO$\\ $PM10$\end{tabular}} & \multicolumn{1}{c|}{N/A}  & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}DHT22 \\ SDS-011\\ MICS-6814\\ MG-811\end{tabular}}  & \multicolumn{1}{c|}{4} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\newpage
+{{\large \textbf{0. Air Quality Monitoring and Control System for a Hospital Room \cite{9657663}}}} 
+\vskip 0.1in
+
+El objetivo era poder desarrollar una aplicación que pudiera monitorizar la temperatura y la humedad relativa de las habitaciones de hospitales en un teléfono usando una APP, en este caso está generalizado, no se centra en ningún hospital ni planta.\\ Sólo describe en el ámbito de implementación  Arduino y los rangos a medir, pero no precisa la localización del sensor en la habitación ni tiene en cuenta todos los factores que pueden influir a la hora de medir tanto la temperatura y la humedad relativa.
+
+\vskip 0.2in
+{{\large \textbf{1. Indoor air quality evaluation in oncology units at two European hospitals: Low-cost sensors for TVOCs, PM2.5 and CO2 real-time monitoring\cite{PALMISANI2021108237}}}} 
+\vskip 0.1in
+
+En este proyecto se realiza una comparativa de análisis de los elementos ambientales de TVOCs, PM2.5 y $CO_2$ usando en medidores baratos y medidores más caros, para comprobar cuánto es el margen de error en ambos casos y cuál presenta más precisión. \\En este estudio se hace en dos hospitales, Barcelona y Bari, en el segundo caso, es el que mide todos, en el caso de Barcelona se centra en las partículas PM2.5. \\Hay que destacar que en este caso, si se precisa la planta en la que se hacen las mediciones, días, frecuencias y zonas dentro de la habitación del paciente en la que se colocan los sensores. \\A diferencia del ejemplo anterior, en este caso las mediciones con ambos equipos se realizan sin usar un Arduino.
+
+\vskip 0.2in
+{{\large \textbf{2. Hospital room air quality monitoring and record system using arduino\cite{soehospital}}}} 
+\vskip 0.1in
+
+Muy similar al primero, en este caso, en lugar de hacer una app para dispositivos móviles, se quería hacer mostrar a tiempo real los datos que se iban obteniendo por parte del Arduino y enseñarlos en una gráfica. \\En este caso, al igual que el primero, no tiene en cuenta la zona de colocación del sensor, no especifica ninguna planta de hospital y no tiene en cuenta los factores de las habitaciones de hospitales.
+
+\newpage
+
+\vskip 0.2in
+{{\large \textbf{3. A Development of Low-Cost Devices for Monitoring Indoor Air Quality in a Large-Scale Hospital\cite{8619934}}}} 
+\vskip 0.1in
+
+En el desarrollo de este proyecto se quería monitorizar a tiempo real el estado ambiental de distintas zonas de hospitales, la zona de espera, emergencias y la farmacia ambulatoria, para ello con los sensores que se mencionan en la tabla, obtiene los valores da cada elemento y realiza un estudio y gráfica a tiempo real monitorizada. \\En este caso, el estudio que hace sólo es de los valores que va obteniendo, pero en ningún momento actúa de alguna manera con los valores que ha recibido. \\No se centra en las habitaciones de los pacientes, pero si en zonas de hospitales, tiene en cuenta los distintos elementos que comprenden cada zona que evalúa y especifica los tramos horarios que hace cada estudio, en este aspecto, lo realiza en los tramos horarios de la mañana. Todo esto lo realiza y lo indica con las dimensiones de una caja que tiene una Raspberry Pi.
+
+
+\vskip 0.2in
+{{\large \textbf{4. Monitoring of Thermal Comfort and Air Quality for Sustainable Energy Management inside Hospitals Based on Online Analytical Processing and the Internet of Things \cite{ijerph191912207}}}} 
+\vskip 0.1in
+
+En este estudio, se realiza de una manera más cercana a la nuestra, se quiere analizar varios elementos ambientales usando un Arduino y procesando los datos con una Raspberry para finalmente mostrarlos por pantalla, aunque en este caso, solo se hace una valoración de estado “bueno”o “malo”, no toma ninguna acción más que ventilar las habitaciones, no lo hace respecto a una zona específica del hospital ni se centra en mejorar el estado de los pacientes. Tiene como lado positivo que realiza una estructura y un despliegue que puede ser útil para este proyecto, porque la idea que se busca es parecida.\\ En el estudio, utiliza una base de datos para poder tener registrados todos los datos a tiempo real, teniendo en cuenta la zona en la que se mide cada estado ambiental con un ID asociado, un tiempo, nivel de cada elemento y realiza una evaluación dependiendo de las medidas en las que está midiendo el sensor, no es un valor genérico, sino que hace un procesamiento del dato recibido por el sensor.
