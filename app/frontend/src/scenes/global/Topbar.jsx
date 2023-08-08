@@ -1,16 +1,13 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
-import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import { Link } from 'react-router-dom';
 
 const Topbar = () => {
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -18,19 +15,18 @@ const Topbar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
-      {/* SEARCH BAR */}
       <Box
         display="flex"
         backgroundColor={colors.primary[400]}
         borderRadius="3px"
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SearchIcon />
-        </IconButton>
       </Box>
 
-      {/* ICONS */}
+      {/**
+       * 
+       * Display the color mode depending on the current theme
+       * 
+      */}
       <Box display="flex">
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
@@ -39,27 +35,30 @@ const Topbar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
+
+        {/**
+         * 
+         * If the user is authenticated, show the button with the link to the logout page
+         * 
+         */}
         {userEmail ? (
-        // Si el usuario está autenticado, mostrar el botón con el enlace para cerrar sesión
-        <Link to="/logout">
-          <IconButton>
-            <PersonOutlinedIcon />
-          </IconButton>
-        </Link>
-      ) : (
-        // Si el usuario no está autenticado, mostrar el botón con el enlace para iniciar sesión
-        <Link to="/login">
-          <IconButton>
-            <PersonOutlinedIcon />
-          </IconButton>
-        </Link>
-      )}
+          <Link to="/logout">
+            <IconButton>
+              <PersonOutlinedIcon />
+            </IconButton>
+          </Link>
+        ) : (
+         /**
+          * 
+          * If the user is not authenticated, show the button with the link to the login page
+          * 
+          */
+          <Link to="/login">
+            <IconButton>
+              <PersonOutlinedIcon />
+            </IconButton>
+          </Link>
+        )}
       </Box>
     </Box>
   );

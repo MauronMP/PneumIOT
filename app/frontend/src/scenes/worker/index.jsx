@@ -7,22 +7,32 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import React, { useEffect, useState } from 'react';
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from "../../config.js";
 
 const Worker = () => {
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const [data, setData] = useState(null);
 
-
+  /**
+   * 
+   * Fetch the data from the database
+   * 
+   */
   useEffect(() => {
-    // Hacer la petición GET al servidor Express
-    fetch('http://localhost:3000/api/v1/worker/')
+    fetch(`${API_BASE_URL}/worker/`)
       .then(response => response.json())
       .then(data => setData(data))
-      .catch(error => console.error('Error al obtener los datos:', error));
+      .catch(error => console.error('Error in obtaining data:', error));
   }, []);
 
+  /**
+   * 
+   * Transform the data to be displayed in the table
+   * 
+   */
   const transformedData = data !== null ? data.map((entry) => ({
     id: entry.worker_id,
     worker_email: entry.worker_email,
@@ -31,19 +41,27 @@ const Worker = () => {
     worker_role: entry.worker_role
   })) : [];
 
-
+  // Redirect to the add worker page
   const handleAdd = () => {
     navigate('/addWorker');
   };
 
+  // Redirect to the remove worker page
   const handleDelete = (id) => {
     navigate(`/removeWorker/${id}`);
   };
 
+  // Redirect to the see patients page
   const handleSeePatients = (id) => {
     navigate(`/seePatients/${id}`);
   };
 
+  /**
+   * 
+   * Define the columns of the table. 
+   * The field of the columns are the keys of the transformedData
+   * 
+   */
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -76,7 +94,7 @@ const Worker = () => {
         if (worker_role !== "doctor") {
           return null;
         }
-      
+
         return (
           <Box
             width="60%"
@@ -89,7 +107,7 @@ const Worker = () => {
             borderRadius="4px"
             onClick={() => handleSeePatients(id)}
           >
-            {<VisibilityIcon/>}
+            {<VisibilityIcon />}
           </Box>
         );
       },
@@ -112,7 +130,7 @@ const Worker = () => {
             }
             borderRadius="4px"
           >
-            {<EditIcon/>}
+            {<EditIcon />}
           </Box>
         );
       },
@@ -124,28 +142,29 @@ const Worker = () => {
       renderCell: ({ row: { id } }) => {
         return (
 
-            <Box
-              width="60%"
-              m="0 auto"
-              p="5px"
-              display="flex"
-              value={id}
-              justifyContent="center"
-              backgroundColor={
-                colors.redAccent[500]
-              }
-              borderRadius="4px"
-              onClick={() => handleDelete(id)}
-            >
-              {<DeleteIcon />}
-              
-            </Box>
+          <Box
+            width="60%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            value={id}
+            justifyContent="center"
+            backgroundColor={
+              colors.redAccent[500]
+            }
+            borderRadius="4px"
+            onClick={() => handleDelete(id)}
+          >
+            {<DeleteIcon />}
+
+          </Box>
 
         );
       },
     },
   ];
 
+  // Return the table with the data and the columns defined above
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -164,8 +183,6 @@ const Worker = () => {
           </Button>
         </Box>
       </Box>
-
-
       <Box
         m="20px 0 0 0"
         height="75vh"

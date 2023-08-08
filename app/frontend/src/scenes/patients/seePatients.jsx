@@ -7,46 +7,76 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import React, { useEffect, useState } from 'react';
 import Header from "../../components/Header";
 import { useNavigate, useParams } from 'react-router-dom';
+import { API_BASE_URL } from "../../config.js";
 
 const Worker = () => {
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const [data, setData] = useState(null);
-    const { id: worker_id  } = useParams();
+  const { id: worker_id  } = useParams();
 
+  /**
+   * 
+   * Fetch the data from the database, the data is an array of objects
+   * of patients given a worker_id, worker_id is the id of the doctor after login
+   * 
+   */
   useEffect(() => {
-    // Hacer la petición GET al servidor Express con el ID como parámetro
-    fetch(`http://localhost:3000/api/v1/doctor/${worker_id}`)
+    fetch(`${API_BASE_URL}/doctor/${worker_id}`)
         .then(response => response.json())
         .then(data => setData(data))
         .catch(error => console.error('Error al obtener los datos:', error));
   }, [worker_id]);
+
+  /**
+   * 
+   * Transform the data to be able to use it in the table.
+   * data is an array of objects, each object is a patient
+   * from the database
+   * 
+   */
   const transformedData = data !== null ? data.map((entry) => ({
-    id: entry.patient_id,
+    id:  entry.event_patient_id,
+    patient_id: entry.patient_id,
     board_id: entry.board_id,
     discharge_date: entry.discharge_date,
     admission_date: entry.admission_date,
   })) : [];
 
-
+  // Redirect to the add patient page
   const handleAddPatient = (worker_id) => {
     navigate(`/addPatient/${worker_id}`);
   };
 
-  const handleDeletePatient = (id) => {
-    navigate(`/removePatient/${id}`);
+  // Redirect to the edit patient page
+  const handleDeletePatient = (patient_id) => {
+    navigate(`/removePatient/${patient_id}`);
   };
 
-  const handleSeeBoard = (id) => {
-    navigate(`/seeBoard/${id}`);
+  // Redirect to see the board given a patient_id and a board_id
+  const handleSeeBoard = (patient_id, board_id) => {
+    navigate(`/seeBoard/${patient_id}/${board_id}`);
   };
-
+  
+  /**
+   * 
+   * Define the columns of the table and the actions 
+   * with the data of each row of the table 
+   * 
+   */
   const columns = [
     { field: "id", headerName: "ID" },
     {
       field: "board_id",
       headerName: "Board",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "patient_id",
+      headerName: "Patient Id",
       flex: 1,
       cellClassName: "name-column--cell",
     },
@@ -64,20 +94,20 @@ const Worker = () => {
       field: "Board",
       headerName: "See_board",
       flex: 1,
-      renderCell: ({ row: { id } }) => {
+      renderCell: ({ row: { patient_id, board_id } }) => {
         return (
           <Box
             width="60%"
             m="0 auto"
             p="5px"
             display="flex"
-            value={id}
+            value={patient_id}
             justifyContent="center"
             backgroundColor={
               colors.greenAccent[400]
             }
             borderRadius="4px"
-            onClick={() => handleSeeBoard(id)}
+            onClick={() => handleSeeBoard(patient_id, board_id)}
           >
             {<VisibilityIcon/>}
           </Box>
@@ -88,14 +118,14 @@ const Worker = () => {
       field: "Edit_patient",
       headerName: "Edit Patient",
       flex: 1,
-      renderCell: ({ row: { id } }) => {
+      renderCell: ({ row: { patient_id } }) => {
         return (
           <Box
             width="60%"
             m="0 auto"
             p="5px"
             display="flex"
-            value={id}
+            value={patient_id}
             justifyContent="center"
             backgroundColor={
               colors.yellowAccent[900]
@@ -111,21 +141,20 @@ const Worker = () => {
       field: "Delete_Patient",
       headerName: "Delete patient",
       flex: 1,
-      renderCell: ({ row: { id } }) => {
+      renderCell: ({ row: { patient_id } }) => {
         return (
-
             <Box
               width="60%"
               m="0 auto"
               p="5px"
               display="flex"
-              value={id}
+              value={patient_id}
               justifyContent="center"
               backgroundColor={
                 colors.redAccent[500]
               }
               borderRadius="4px"
-              onClick={() => handleDeletePatient(id)}
+              onClick={() => handleDeletePatient(patient_id)}
             >
               {<DeleteIcon />}
               
@@ -136,6 +165,7 @@ const Worker = () => {
     },
   ];
 
+  // Render the button to add a new patient
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -155,7 +185,6 @@ const Worker = () => {
           </Button>
         </Box>
       </Box>
-
 
       <Box
         m="20px 0 0 0"

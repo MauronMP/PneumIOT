@@ -5,24 +5,25 @@ import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
 const HomeComponent = () => {
+
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  /**
+   * 
+   * logout function, clears the local storage 
+   * and redirects to the login page
+   * 
+   */
   const handleLogout = () => {
-    // Perform the logout actions here, e.g., clearing user data, tokens, etc.
-    // Then, redirect the user to the home page.
     localStorage.clear();
     navigate('/');
-
-    // Finally, reload the page to ensure a clean state.
     window.location.reload();
   };
 
   return (
-
     <Box m="20px" >
-      {/* HEADER */}
       <Box display="flex" justifyContent="center" alignItems="center">
         <Header title="Vas a cerrar sesión" subtitle="¿Seguro?" />
       </Box>
@@ -40,7 +41,6 @@ const HomeComponent = () => {
         </Button>
       </Box>
     </Box>
-
   );
 };
 

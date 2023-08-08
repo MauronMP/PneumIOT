@@ -8,14 +8,23 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { Accessible, Inventory } from "@mui/icons-material";
+import SensorsIcon from '@mui/icons-material/Sensors';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  /**
+   * 
+   * This JSX function renders a MenuItem that displays a title and an icon. 
+   * If the item is selected (selected === title), it is visually highlighted. 
+   * Clicking on the item sets the title as selected (setSelected(title)) 
+   * and redirects to the specified link (to) using React Router's Link.
+   * 
+   */
   return (
     <MenuItem
       active={selected === title}
@@ -32,13 +41,15 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const userRole = localStorage.getItem('userRole');
   const userName = localStorage.getItem('userName');
-  
+  const userID = localStorage.getItem('userID');
+
   return (
     <Box
       sx={{
@@ -61,7 +72,6 @@ const Sidebar = () => {
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
@@ -93,12 +103,23 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  {userName ? `${userName}` : '¡Inicia sesión!'}
+                  {/**
+                   * 
+                   * Renders a Typography component that displays the user name (userName)
+                   * 
+                   */}
+                  <Typography variant="h3" color={colors.grey[100]}>
+                    {userName ? `${userName}` : '¡Inicia sesión!'}
+                  </Typography>
                 </Typography>
-                </Typography>
+
+                {/**
+                   * 
+                   * Renders a Typography component that displays the user role (userRole)
+                   * 
+                   */}
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                {userRole && `${userRole}`}
+                  {userRole && `${userRole}`}
                 </Typography>
               </Box>
             </Box>
@@ -113,69 +134,94 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
-            <Item
-              title="Manage workers"
-              to="/worker"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {/**
+             * 
+             * If the user role is 'doctor', it renders a 
+             * MenuItem that displays the title 'Manage workers' and
+             * MenuItem that displays the title 'Create a worker' and
+             * 
+             */}
+            {userRole === 'admin' && (
+              <div>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Pages
+                </Typography>
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Pages
-            </Typography>
-            <Item
-              title="Create a worker"
-              to="/addWorker"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            
+                <Item
+                  title="Manage workers"
+                  to="/worker"
+                  icon={<PeopleOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+
+                <Item
+                  title="Create a worker"
+                  to="/addWorker"
+                  icon={<PersonOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </div>
+            )}
+
+            {/**
+             * 
+             * If the user role is 'doctor', it renders a 
+             * MenuItem that displays the title 'See patients'
+             * 
+             */}
+            {userRole === 'doctor' && (
+              <Item
+                title="See patients"
+                to={`/seePatients/${userID}`}
+                icon={<Accessible />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
+
+            {/**
+             * 
+             * If the user role is 'doctor' or 'admin', it renders a 
+             * MenuItem that displays the title 'Manage boards'
+             * 
+             */}
+            {(userRole === 'doctor' || userRole === 'admin') && (
+              <Item
+                title="Manage boards"
+                to="/boards"
+                icon={<Inventory />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+
+            )}
+
+            {/**
+             * 
+             * If the user role is 'admin', it renders a 
+             * MenuItem that displays the title 'See sensors'
+             * 
+             */}
+            {userRole === 'admin' && (
+              <Item
+                title="See sensors"
+                to="/seeSensors"
+                icon={<SensorsIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
+
             <Item
               title="FAQ Page"
               to="/faq"
               icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

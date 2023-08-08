@@ -5,22 +5,33 @@ import Header from "../../components/Header";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../config.js";
 
-const HomeComponent = () => {
+const RemoveBoardComponent = () => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { id } = useParams();
+  const worker_id = localStorage.getItem('userID');
+  const worker_role = localStorage.getItem('userRole');
+  const { id } = useParams(); 
+  let query = '';
 
-  /**
-   * 
-   * Remove worker function, removes the worker from the database given its id.
-   * if the response is ok, redirects to the worker page.
-   * 
-   */
+  // Query will be different depending on the user role
+  if (worker_role === 'admin') {
+    query = `${API_BASE_URL}/board/remove/${id}`;
+  } else {
+    query = `${API_BASE_URL}/board/${id}`;
+  }
+
+  // Fetch to the server to delete the board
   const handleDeleteUser = () => {
-    fetch(`${API_BASE_URL}/worker/${id}`, {
+    const data = {
+      board_id: id,
+      worker_id: worker_id,
+    };
+
+    fetch(query, {
       method: "DELETE",
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (!response.ok) {
@@ -28,18 +39,17 @@ const HomeComponent = () => {
         }
       })
       .then((data) => {
-        window.location.href = "/worker";
+        window.location.href = "/boards";
       })
       .catch((error) => {
         throw new Error(error);
       });
   };
 
-  // Render the button to remove the worker
   return (
     <Box m="20px" >
       <Box display="flex" justifyContent="center" alignItems="center">
-        <Header title={`You are going to delete the worker with ${id}`} subtitle="Are you sure you want to delete it?" />
+        <Header title={`You are going to delete a board with the identifier ${id}`} subtitle="Are you sure you want to delete it? Deleting it means deleting the patients associated with it and all related data." />
       </Box>
       <Box display="flex" justifyContent="center" alignItems="center">
         <Button
@@ -51,11 +61,11 @@ const HomeComponent = () => {
             padding: "10px 20px",
           }}
           onClick={handleDeleteUser}>
-          Remove worker
+          Remove board
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default HomeComponent;
+export default RemoveBoardComponent;

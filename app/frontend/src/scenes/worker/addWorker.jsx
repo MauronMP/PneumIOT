@@ -4,19 +4,57 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import React, { useState } from "react";
+import { API_BASE_URL } from "../../config.js";
 
 const Form = () => {
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [errorMessage, setErrorMessage] = useState(null);
 
+    // Regex expressions to validate the dni, it must have 8 numbers and 1 letter
+    const dniRegExp = /^\d{8}[A-Z]$/;
+    // Regex expression to validate the password, it must have 5 characters, 1 uppercase and 1 special character
+    const passwordRegExp = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(.{5,})$/;
+
+    /**
+     * 
+     * Validate the form fields. 
+     * worker_id calls the dniRegExp and passwd_auth calls the passwordRegExp
+     * 
+     */
+    const checkoutSchema = yup.object().shape({
+        worker_name: yup.string().required("Don't forget the name"),
+        worker_surname: yup.string().required("Don't forget the surname"),
+        worker_email: yup.string().email("invalid worker_email").required("Don't forget the worker_email"),
+        worker_id: yup.string().matches(dniRegExp, "7 numbers and 1 digit").required("required"),
+        worker_role: yup.string().required("Select one the roles"),
+        passwd_auth: yup.string().required("required").matches(passwordRegExp, "Minumum 5 characters, 1 uppercase and 1 special character"),
+    });
+
+    // Set the initial values of the form
+    const initialValues = {
+        worker_name: "",
+        worker_surname: "",
+        worker_email: "",
+        worker_id: "",
+        worker_role: "",
+        passwd_auth: "",
+    };
+
+    /**
+     * 
+     * Send the form data to the backend server. 
+     * If the worker is added correctly, redirect to the worker page.
+     * Otherwise show an error message
+     * 
+     */
     const handleSubmit = (values) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values),
         };
-        fetch('http://localhost:3000/api/v1/worker/', requestOptions)
+        fetch(`${API_BASE_URL}/worker/`, requestOptions)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -28,17 +66,16 @@ const Form = () => {
                     setErrorMessage("ID or email already exists");
                 } else {
                     window.location.href = "/worker";
-                    setErrorMessage(null); // Limpiar el mensaje de error si hay una respuesta válida
+                    setErrorMessage(null);
                 }
 
             })
             .catch((error) => {
-                setErrorMessage("Error en el servidor")
+                setErrorMessage("Server error")
             });
-            
     };
 
-
+    // Render the form
     return (
         <Box m="20px">
             <Header title="New worker" subtitle="Create a new worker" />
@@ -92,6 +129,7 @@ const Form = () => {
                                 helperText={touched.worker_email && errors.worker_email}
                                 sx={{ gridColumn: "span 4" }}
                             />
+                            
                             <TextField
                                 fullWidth
                                 variant="filled"
@@ -105,6 +143,7 @@ const Form = () => {
                                 helperText={touched.worker_name && errors.worker_name}
                                 sx={{ gridColumn: "span 2" }}
                             />
+
                             <TextField
                                 fullWidth
                                 variant="filled"
@@ -118,8 +157,6 @@ const Form = () => {
                                 helperText={touched.worker_surname && errors.worker_surname}
                                 sx={{ gridColumn: "span 2" }}
                             />
-
-
 
                             <TextField
                                 fullWidth
@@ -154,39 +191,19 @@ const Form = () => {
                             />
                             
                         </Box>
+
                         <Box display="flex" justifyContent="end" mt="20px">
                             <Button type="submit" color="secondary" variant="contained">
                                 Create New User
                             </Button>
                         </Box>
-                        {/* Mostrar mensaje de error si existe */}
+                        {/* Display error message if exists */}
                         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     </form>
                 )}
             </Formik>
         </Box>
     );
-};
-
-const dniRegExp = /^\d{8}[A-Z]$/;
-const passwordRegExp = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(.{5,})$/;
-
-
-const checkoutSchema = yup.object().shape({
-    worker_name: yup.string().required("Don't forget the name"),
-    worker_surname: yup.string().required("Don't forget the surname"),
-    worker_email: yup.string().email("invalid worker_email").required("Don't forget the worker_email"),
-    worker_id: yup.string().matches(dniRegExp, "7 numbers and 1 digit").required("required"),
-    worker_role: yup.string().required("Select one the roles"),
-    passwd_auth: yup.string().required("required").matches(passwordRegExp, "Minumum 5 characters, 1 uppercase and 1 special character"),
-});
-const initialValues = {
-    worker_name: "",
-    worker_surname: "",
-    worker_email: "",
-    worker_id: "",
-    worker_role: "",
-    passwd_auth: "",
 };
 
 export default Form;
