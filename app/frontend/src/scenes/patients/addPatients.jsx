@@ -5,11 +5,13 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import { API_BASE_URL, DateInput, getCurrentDate } from "../../config.js";
+import { useParams } from 'react-router-dom';
 
 const Form = () => {
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [errorMessage, setErrorMessage] = useState(null);
+    const { id: worker_id  } = useParams();
 
     // Regex for dni validation (8 numbers + 1 letter)
     const dniRegExp = /^\d{8}[A-Z]$/;
@@ -46,7 +48,7 @@ const Form = () => {
     const handleSubmit = (values) => {
 
         values.discharge_date = new Date(values.discharge_date);
-        values.worker_id = localStorage.getItem('userID');
+        values.worker_id = worker_id;
       
         const requestOptions = {
           method: 'POST',

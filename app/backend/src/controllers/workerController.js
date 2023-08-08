@@ -174,14 +174,14 @@ const loginWorker = (req, res) => {
     const passwd_auth = req.params.passwd_auth;
 
     pool.query(workerQueries.loginWorker, [worker_email], (error, results) => {
-        if (error) {
+        if (error) {        
             throw error;
         } else {
             const workerData = results.rows[0];
-            if (workerData && workerData.passwd_auth === passwd_auth) {
-                res.status(200).json(workerData);
+            if (workerData.worker_email === worker_email && workerData.passwd_auth === passwd_auth) {
+                res.status(200).json(results.rows);
             } else {
-                res.status(401).json({ error: 'Invalid credentials.' });
+                res.status(200).json("");
             }
         }
     });
