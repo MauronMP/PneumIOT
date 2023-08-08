@@ -5,28 +5,35 @@ const patientRoutes = require('./src/routes/patientRoutes');
 const workerRoutes = require('./src/routes/workerRoutes');
 const doctorRoutes = require('./src/routes/doctorRoutes');
 const boardRoutes = require('./src/routes/boardRoutes');
-const boardPatientRoutes = require('./src/routes/boardPatientRoutes');
+const sensorRoutes = require('./src/routes/sensorRoutes');
+const dailyRoutes = require('./src/routes/dailyRoutes');
+const monthlyRoutes = require('./src/routes/monthlyRoutes');
+const yearlyRoutes = require('./src/routes/yearlyRoutes');
 
 const app = express()
 const port = 3000
 
-// Configurar las opciones de CORS
+/**
+ * 
+ * Configure CORS options
+ * Allow requests from this source
+ * 
+ */
 const corsOptions = {
-    origin: 'http://localhost:5000', // Permitir solicitudes desde este origen
-    optionsSuccessStatus: 200, // Algunas versiones de CORS requieren este campo
+    origin: 'http://localhost:5000', 
+    optionsSuccessStatus: 200, 
   };
 
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.get("/", (req,res) => {
-    res.send("Hello world!");
-})
-
 app.use('/api/v1/patients', patientRoutes);
 app.use('/api/v1/worker', workerRoutes);
 app.use('/api/v1/doctor', doctorRoutes);
 app.use('/api/v1/board', boardRoutes);
-app.use('/api/v1/boardPatient', boardPatientRoutes);
+app.use('/api/v1/sensor', sensorRoutes);
+app.use('/api/v1/daily', dailyRoutes);
+app.use('/api/v1/monthly', monthlyRoutes);
+app.use('/api/v1/yearly', yearlyRoutes);
 
-app.listen(port, () => console.log(`Funcionando en el puesto ${port}`))
+app.listen(port, () => console.log(`Working on port: ${port}`))
