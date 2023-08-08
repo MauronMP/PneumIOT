@@ -7,3 +7,6 @@ CREATE TABLE IF NOT EXISTS pneumiot.sensor(
     max_value numeric(4,2) NOT NULL,
     PRIMARY KEY(sensor_id)
 );
+
+
+SELECT * FROM pneumiot.sensor where sensor_id = '123-abc-456-def';
