@@ -1,5 +1,6 @@
 const pool = require('../../db');
 const dailyQueries = require('../queries/dailyQueries');
+const logQueries = require('../queries/logQueries');
 
 /**
  * 
@@ -11,7 +12,10 @@ const dateRange = (req, res) => {
     const { patient_id, board_id } = req.params;
 
     pool.query(dailyQueries.getRangeDays, [patient_id, board_id], (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `Error getting date range for patient_id: ${patient_id} and board_id: ${board_id} at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
 
         // Format dates before sending the response
         const formattedResults = results.rows.map((row) => {
@@ -45,7 +49,10 @@ const getSensorTypesByPatientIdAndDate = (req, res) => {
     const { patient_id, day_date, board_id } = req.params;
 
     pool.query(dailyQueries.getSensorTypesByPatientIdAndDate, [patient_id, day_date, board_id], (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `Error getting sensor types for patient_id: ${patient_id}, day_date: ${day_date} and board_id: ${board_id} at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         res.status(200).json(results.rows);
     });
 };
@@ -58,11 +65,12 @@ const getSensorTypesByPatientIdAndDate = (req, res) => {
 const getAverageDataByPatientIdDateAndSensorId = (req, res) => {
 
     const { sensor_id, patient_id, day_date, board_id } = req.params;
-    pool.query(dailyQueries.getAverageDataByPatientIdDateAndSensorId, [sensor_id, patient_id, day_date, board_id], (error, results) => {
 
+    pool.query(dailyQueries.getAverageDataByPatientIdDateAndSensorId, [sensor_id, patient_id, day_date, board_id], (error, results) => {
         if (error) {
-            console.log(error)
-        };
+            const log_message = `Error getting average data for patient_id: ${patient_id}, day_date: ${day_date}, sensor_id: ${sensor_id} and board_id: ${board_id} at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         res.status(200).json(results.rows);
     });
 };

@@ -4,6 +4,7 @@ const sensorQueries = require('../queries/sensorQueries');
 const boardQueries = require('../queries/boardQueries');
 const patientQueries = require('../queries/patientQueries');
 const doctorQueries = require('../queries/doctorQueries');
+const logQueries = require('../queries/logQueries');
 
 /**
  * 
@@ -12,7 +13,10 @@ const doctorQueries = require('../queries/doctorQueries');
  */
 const getAllSensors = (req, res) => {
     pool.query(sensorQueries.getAllSensors, (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `There was an error getting all sensors at time ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         res.status(200).json(results.rows);
     });
 };
@@ -27,10 +31,16 @@ const addSensor = (req, res) => {
     const { sensor_id, sensor_type, sensor_units, min_value, max_value } = req.body;
 
     pool.query(sensorQueries.checkIfSensorIdExists, [sensor_id], (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `There was an error checking if the sensor with id: ${sensor_id} exists at time ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         if (results.rows.length === 0) {
             pool.query(sensorQueries.addSensor, [sensor_id, sensor_type, sensor_units, min_value, max_value], (error, results) => {
-                if (error) throw error;
+                if (error) {
+                    const log_message = `There was an error adding the sensor with id: ${sensor_id} at time ${new Date()}`;
+                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                }
                 res.status(200).json({ message: "Sensor added successfully" });
             });
         } else {
@@ -57,6 +67,7 @@ const removeSensor = async (req, res) => {
         const doctorsBySensorId = await pool.query(sensorQueries.getDoctorsBySensorId, [sensor_id]);
 
         if (doctorsBySensorId.rows.length > 1) {
+
             const worker_ids = doctorsBySensorId.rows.map((row) => row.worker_id);
 
             for (const worker_id of worker_ids) {

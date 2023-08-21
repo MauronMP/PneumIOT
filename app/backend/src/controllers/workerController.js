@@ -1,6 +1,7 @@
 const pool = require('../../db');
 const workerQueries = require('../queries/workerQueries');
 const workerAuthQueries = require('../queries/workerAuthQueries');
+const logQueries = require('../queries/logQueries');
 const EMPTY_ARRAY = 0;
 
 /**
@@ -11,7 +12,10 @@ const EMPTY_ARRAY = 0;
 const getWorkers = (req, res) => {
 
     pool.query(workerQueries.getWorkers, (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `Error getting all workers at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
         } else {
@@ -30,7 +34,10 @@ const getWorkerById = (req, res) => {
     const worker_id = req.params.worker_id;
 
     pool.query(workerQueries.getWorkerById, [worker_id], (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `There was an error getting the worker by its worker_id: ${worker_id} at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
         } else {
@@ -49,7 +56,10 @@ const getWorkerByRole = (req, res) => {
     const worker_role = req.params.worker_role;
 
     pool.query(workerQueries.getWorkerByRole, [worker_role], (error, results) => {
-        if (error) throw error;
+        if (error) {
+            const log_message = `There was an error getting the workers by its worker_role: ${worker_role} at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
+        }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
         } else {
@@ -74,6 +84,8 @@ const addWorker = (req, res) => {
     const query1 = new Promise((resolve, reject) => {
         pool.query(workerQueries.addWorker, [worker_id, worker_email, worker_name, worker_surname, worker_role], (error, results) => {
             if (error) {
+                const log_message = `There was an error adding the worker with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.errorLog, [log_message], (error, results));
                 reject(error);
             } else {
                 resolve(results);
@@ -84,6 +96,8 @@ const addWorker = (req, res) => {
     const query2 = new Promise((resolve, reject) => {
         pool.query(workerAuthQueries.addWorkerAuth, [worker_id, passwd_auth], (error, results) => {
             if (error) {
+                const log_message = `There was an error adding the workerAuth with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.errorLog, [log_message], (error, results));
                 reject(error);
             } else {
                 resolve(results);
@@ -118,6 +132,8 @@ const removeWorker = (req, res) => {
     const getWorkerPromise = new Promise((resolve, reject) => {
         pool.query(workerQueries.getWorkerById, [worker_id], (error, results) => {
             if (error) {
+                const log_message = `There was an error getting the worker by its worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.errorLog, [log_message], (error, results));
                 reject(error);
             } else {
                 const noWorkerFound = !results.rows.length;
@@ -134,6 +150,8 @@ const removeWorker = (req, res) => {
     const deleteWorkerPromise = new Promise((resolve, reject) => {
         pool.query(workerQueries.removeWorker, [worker_id], (error, results) => {
             if (error) {
+                const log_message = `There was an error removing the worker with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.errorLog, [log_message], (error, results));
                 reject(error);
             } else {
                 resolve();
@@ -145,6 +163,8 @@ const removeWorker = (req, res) => {
     const deleteWorkerAuthPromise = new Promise((resolve, reject) => {
         pool.query(workerAuthQueries.deleteWorkerAuth, [worker_id], (error, results) => {
             if (error) {
+                const log_message = `There was an error removing the worker authentication with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.errorLog, [log_message], (error, results));
                 reject(error);
             } else {
                 resolve();
@@ -174,8 +194,9 @@ const loginWorker = (req, res) => {
     const passwd_auth = req.params.passwd_auth;
 
     pool.query(workerQueries.loginWorker, [worker_email], (error, results) => {
-        if (error) {        
-            throw error;
+        if (error) {
+            const log_message = `There was an error getting the worker by its worker_email: ${worker_email} at ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results));
         } else {
             const workerData = results.rows[0];
             if (workerData.worker_email === worker_email && workerData.passwd_auth === passwd_auth) {
