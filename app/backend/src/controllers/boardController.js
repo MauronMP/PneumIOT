@@ -4,6 +4,7 @@ const sensorQueries = require("../queries/sensorQueries");
 const doctorQueries = require("../queries/doctorQueries");
 const patientQueries = require("../queries/patientQueries");
 const logQueries = require('../queries/logQueries');
+
 const EMPTY_ARRAY = 0;
 
 /**
@@ -16,7 +17,7 @@ const getAllBoards = (req, res) => {
     pool.query(boardQueries.getAllBoards, (error, results) => {
         if (error) {
             const log_message = `Error getting all boards at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
@@ -38,9 +39,11 @@ const getBoardsByWorkerId = (req, res) => {
     pool.query(boardQueries.getBoardsByWorkerId, [worker_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the boards by its worker_id: ${worker_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
+            const log_message = `Worker with worker_id: ${worker_id} got all boards at ${new Date()}`;
+            pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
             res.status(200).json(results.rows);
         }
     });
@@ -73,7 +76,7 @@ const getBoardByBoardId = (req, res) => {
     pool.query(boardQueries.getBoardByBoardId, [board_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the board by its board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
@@ -102,8 +105,10 @@ const addBoard = (req, res) => {
                         pool.query(boardQueries.addBoard, [board_id, sensor_id], (error, results) => {
                             if (error) {
                                 const log_message = `There was an error adding the board with board_id: ${board_id} at ${new Date()}`;
-                                pool.query(logQueries.errorLog, [log_message], (error, results));
+                                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                             }
+                            const log_message = `Board data with board_id: ${board_id} and sensor_id: ${sensor_id} added successfully at ${new Date()}`;
+                            pool.query(logQueries.sensorLog, [board_id,sensor_id,log_message], (error, results) => {});
                             res.status(200).json({ message: "Board data added successfully" });
                         });
                     } else {
@@ -136,7 +141,7 @@ const removeBoard = (req, res) => {
     pool.query(boardQueries.getBoardByBoardId, [board_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the board by its board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length) {
             pool.query(doctorQueries.getDoctorByWorkerId, [worker_id], (error, results) => {
@@ -144,18 +149,20 @@ const removeBoard = (req, res) => {
                     pool.query(boardQueries.removeBoard, [board_id], (error, results) => {
                         if (error) {
                             const log_message = `There was an error removing the board with board_id: ${board_id} at ${new Date()}`;
-                            pool.query(logQueries.errorLog, [log_message], (error, results));
+                            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                         }
                         pool.query(patientQueries.deletePatientsByBoardId, [board_id], (error, results) => {
                             if (error) {
                                 const log_message = `There was an error removing the patients with board_id: ${board_id} at ${new Date()}`;
-                                pool.query(logQueries.errorLog, [log_message], (error, results));
+                                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                             }
                             pool.query(doctorQueries.deletePatientsGivenBoardId, [board_id], (error, results) => {
                                 if (error) {
                                     const log_message = `There was an error removing the patients with board_id: ${board_id} associated to doctor at ${new Date()}`;
-                                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                                 }
+                                const log_message = `Worker with worker_id: ${worker_id} removed board with board_id: ${board_id} successfully at ${new Date()}`;
+                                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                                 res.status(200).send("Board remove successfully");
                             });
                         });
@@ -182,13 +189,13 @@ const removeBoardAsAdmin = (req, res) => {
     pool.query(boardQueries.getBoardByBoardId, [board_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the board by its board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length) {
             pool.query(boardQueries.getWorkerByBoardID, [board_id], (error, results) => {
                 if (error) {
                     const log_message = `There was an error getting the worker by its board_id: ${board_id} at ${new Date()}`;
-                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 }
                 if (results.rows.length !== EMPTY_ARRAY) {
                     results.rows.forEach((worker) => {
@@ -200,8 +207,10 @@ const removeBoardAsAdmin = (req, res) => {
                     pool.query(boardQueries.removeBoard, [board_id], (error, results) => {
                         if (error) {
                             const log_message = `There was an error removing the board with board_id: ${board_id} at ${new Date()}`;
-                            pool.query(logQueries.errorLog, [log_message], (error, results));
+                            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                         }
+                        const log_message = `Board with board_id: ${board_id} removed successfully, with no worker associated ${worker_id} at ${new Date()}`;
+                        pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                         res.status(200).json({ message: "Board removed successfully" });
                     });
                 }
@@ -226,7 +235,7 @@ const getAllDataByBoardId = async (req, res) => {
             pool.query(boardQueries.getAllDataByBoardId, [board_id], (error, results) => {
                 if (error) {
                     const log_message = `There was an error getting all the data by board_id: ${board_id} at ${new Date()}`;
-                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 }
                 if (results.rows.length !== EMPTY_ARRAY) {
                     res.status(200).json(results.rows);
@@ -237,7 +246,7 @@ const getAllDataByBoardId = async (req, res) => {
         }
     } catch (error) {
         const log_message = `${error} at time ${new Date()}`;
-        pool.query(logQueries.errorLog, [log_message], (error, results));
+        pool.query(logQueries.errorLog, [log_message], (error, results) => {});
     }
 };
 
@@ -251,7 +260,7 @@ const getSensorTypes = (req, res) => {
     pool.query(boardQueries.getSensorTypes, (error, results) => {
         if (error) {
             const log_message = `There was an error getting all the sensor types at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
