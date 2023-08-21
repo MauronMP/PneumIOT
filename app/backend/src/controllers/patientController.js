@@ -9,7 +9,7 @@ const getPatients = (req, res) => {
     pool.query(queries.getPatients, (error, results) => {
         if (error) {
             const log_message = `There was an error getting all patients at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         res.status(200).json(results.rows);
     });
@@ -23,7 +23,7 @@ const getPatientById = (req, res) => {
     pool.query(queries.getPatientById, [patient_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the patient by its patient_id: ${patient_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         res.status(200).json(results.rows);
     });
@@ -39,7 +39,7 @@ const addPatient = async (req, res) => {
             pool.query(queries.checkBoardIdExists, [board_id], (error, results) => {
                 if (error) {
                     const log_message = `There was an error checking if the board_id exists: ${board_id} at ${new Date()}`;
-                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                     reject("Error Server");
                 } else {
                     resolve(results.rows.length > 0);
@@ -62,14 +62,14 @@ const addPatient = async (req, res) => {
                 async (error, results) => {
                     if (error) {
                         const log_message = `There was an error adding the patient: ${patient_id} at ${new Date()}`;
-                        pool.query(logQueries.errorLog, [log_message], (error, results));
+                        pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                         res.status(500).json({ message: "Server error" });
                     } else {
                         try {
                             await doctorController.addDoctorPatient(req, res);
                         } catch (error) {
                             const log_message = `There was an error adding the patient: ${patient_id} at ${new Date()}`;
-                            pool.query(logQueries.errorLog, [log_message], (error, results));
+                            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                             res.status(500).json({ message: "Server error" });
                         }
                     }
@@ -78,7 +78,7 @@ const addPatient = async (req, res) => {
         }
     } catch (error) {
         const log_message = `There was an error with the board_id: ${board_id} at ${new Date()}`;
-        pool.query(logQueries.errorLog, [log_message], (error, results));
+        pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         res.status(500).json({ message: "Server error" });
     }
 };
@@ -103,7 +103,7 @@ const removePatient = (req, res) => {
         pool.query(queries.removePatient, [patient_id], (error, results) => {
             if (error) {
                 const log_message = `There was an error removing the patient by its patient_id: ${patient_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results));
+                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
             }
             res.status(200).send("Patient remove successfully");
         });
@@ -123,7 +123,7 @@ const getPatientByBoardId = (req, res) => {
     pool.query(queries.getPatientByBoardId, [board_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the patient by its board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);

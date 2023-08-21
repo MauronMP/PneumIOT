@@ -15,7 +15,7 @@ const getAllDoctorPatient = (req, res) => {
     pool.query(doctorQueries.getAllDoctorPatient, (error, results) => {
         if (error) {
             const log_message = `Error getting all doctor-patient relations at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
@@ -37,15 +37,17 @@ const getPatientsByDoctorId = (req, res) => {
     pool.query(workerQueries.getWorkerById, [worker_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the worker by its worker_id: ${worker_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             pool.query(doctorQueries.getPatientsByDoctorId, [worker_id], (error, results) => {
                 if (error) {
                     const log_message = `There was an error getting the patients by its worker_id: ${worker_id} at ${new Date()}`;
-                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 }
                 if (results.rows.length !== EMPTY_ARRAY) {
+                    const log_message = `Getting all patients associated to a doctor by its worker_id: ${worker_id} at ${new Date()}`;
+                    pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                     res.status(200).json(results.rows);
                 }
             });
@@ -83,8 +85,10 @@ const addDoctorPatient = (req, res) => {
                             pool.query(doctorQueries.addDoctorPatient, [patient_id, worker_id], (error, results) => {
                                 if (error) {
                                     const log_message = `There was an error adding the doctor-patient relation: ${patient_id} - ${worker_id} at ${new Date()}`;
-                                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                                 }
+                                const log_message = `Doctor-Patient added Successfully: ${patient_id} - ${worker_id} at ${new Date()}`;
+                                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                                 res.status(201).send("Doctor-Patient added Successfully");
                             })
                         } else {
@@ -126,8 +130,10 @@ const removeDoctorPatient = (req, res) => {
                             pool.query(doctorQueries.removeDoctorPatient, [patient_id, worker_id], (error, results) => {
                                 if (error) {
                                     const log_message = `There was an error removing the doctor-patient relation: ${patient_id} - ${worker_id} at ${new Date()}`;
-                                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                                 }
+                                const log_message = `Doctor-Patient removed successfully: ${patient_id} - ${worker_id} at ${new Date()}`;
+                                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                                 res.status(201).send("Doctor-Patient removed successfully");
                             })
                         } else {

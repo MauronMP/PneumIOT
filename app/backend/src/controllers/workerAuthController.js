@@ -16,9 +16,11 @@ const getPasswordHash = (req, res) => {
     pool.query(workerAuthQueries.getPasswordHash, [worker_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the password hash for worker ${worker_id} at time ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
+            const log_message = `Worker ${worker_id} logged in at time ${new Date()}`;
+            pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
             res.status(200).json(results.rows);
         } else {
             res.status(200).json("");
@@ -39,8 +41,10 @@ const addWorkerAuth = ([worker_id, passwd_auth]) => {
     pool.query(workerAuthQueries.addWorkerAuth, [worker_id, hashedPassword], (error, results) => {
         if (error) {
             const log_message = `There was an error adding the workerAuth for worker ${worker_id} at time ${new Date()}`
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
+        const log_message = `Worker ${worker_id} added at time ${new Date()}`;
+        pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
         res.send(req.body);
     });
 };

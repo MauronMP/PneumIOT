@@ -14,7 +14,7 @@ const getWorkers = (req, res) => {
     pool.query(workerQueries.getWorkers, (error, results) => {
         if (error) {
             const log_message = `Error getting all workers at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
@@ -36,9 +36,11 @@ const getWorkerById = (req, res) => {
     pool.query(workerQueries.getWorkerById, [worker_id], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the worker by its worker_id: ${worker_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
+            const log_message = `Getting a worker by its worker_id: ${worker_id} at ${new Date()}`;
+            pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
             res.status(200).json(results.rows);
         } else {
             res.status(400).json({ error: "No Worker exists with this ID!" });
@@ -58,7 +60,7 @@ const getWorkerByRole = (req, res) => {
     pool.query(workerQueries.getWorkerByRole, [worker_role], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the workers by its worker_role: ${worker_role} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length !== EMPTY_ARRAY) {
             res.status(200).json(results.rows);
@@ -85,9 +87,11 @@ const addWorker = (req, res) => {
         pool.query(workerQueries.addWorker, [worker_id, worker_email, worker_name, worker_surname, worker_role], (error, results) => {
             if (error) {
                 const log_message = `There was an error adding the worker with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results));
+                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 reject(error);
             } else {
+                const log_message = `Added a new worker with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                 resolve(results);
             }
         });
@@ -97,9 +101,11 @@ const addWorker = (req, res) => {
         pool.query(workerAuthQueries.addWorkerAuth, [worker_id, passwd_auth], (error, results) => {
             if (error) {
                 const log_message = `There was an error adding the workerAuth with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results));
+                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 reject(error);
             } else {
+                const log_message = `Added a new workerAuth with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                 resolve(results);
             }
         });
@@ -133,13 +139,15 @@ const removeWorker = (req, res) => {
         pool.query(workerQueries.getWorkerById, [worker_id], (error, results) => {
             if (error) {
                 const log_message = `There was an error getting the worker by its worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results));
+                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 reject(error);
             } else {
                 const noWorkerFound = !results.rows.length;
                 if (noWorkerFound) {
                     reject(new Error("Worker does not exist in the database"));
                 } else {
+                    const log_message = `Promised to remove the worker by getting its worker_id: ${worker_id} at ${new Date()}`;
+                    pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                     resolve();
                 }
             }
@@ -151,9 +159,11 @@ const removeWorker = (req, res) => {
         pool.query(workerQueries.removeWorker, [worker_id], (error, results) => {
             if (error) {
                 const log_message = `There was an error removing the worker with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results));
+                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 reject(error);
             } else {
+                const log_message = `Promised to remove the worker with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                 resolve();
             }
         });
@@ -164,9 +174,11 @@ const removeWorker = (req, res) => {
         pool.query(workerAuthQueries.deleteWorkerAuth, [worker_id], (error, results) => {
             if (error) {
                 const log_message = `There was an error removing the worker authentication with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results));
+                pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 reject(error);
             } else {
+                const log_message = `Promised to remove the workerAuth with worker_id: ${worker_id} at ${new Date()}`;
+                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => {});
                 resolve();
             }
         });
@@ -196,7 +208,7 @@ const loginWorker = (req, res) => {
     pool.query(workerQueries.loginWorker, [worker_email], (error, results) => {
         if (error) {
             const log_message = `There was an error getting the worker by its worker_email: ${worker_email} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         } else {
             const workerData = results.rows[0];
             if (workerData.worker_email === worker_email && workerData.passwd_auth === passwd_auth) {
