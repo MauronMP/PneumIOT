@@ -9,6 +9,7 @@ const sensorRoutes = require('./src/routes/sensorRoutes');
 const dailyRoutes = require('./src/routes/dailyRoutes');
 const monthlyRoutes = require('./src/routes/monthlyRoutes');
 const yearlyRoutes = require('./src/routes/yearlyRoutes');
+const logRoutes = require('./src/routes/logRoutes');
 
 const app = express()
 const port = 3000
@@ -35,5 +36,6 @@ app.use('/api/v1/sensor', sensorRoutes);
 app.use('/api/v1/daily', dailyRoutes);
 app.use('/api/v1/monthly', monthlyRoutes);
 app.use('/api/v1/yearly', yearlyRoutes);
+app.use('/api/v1/log', logRoutes);
 
 app.listen(port, () => console.log(`Working on port: ${port}`))

@@ -123,3 +123,10 @@ CREATE TABLE IF NOT EXISTS pneumiot.monthly_average(
     year_date int NOT NULL,
     PRIMARY KEY(event_id)
 );
+
+-- Creation of the error_log table -- 
+CREATE TABLE IF NOT EXISTS pneumiot.error_log (
+    log_id SERIAL NOT NULL,
+    log_message CHARACTER VARYING(250),
+    PRIMARY KEY(log_id)
+);
