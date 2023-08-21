@@ -15,7 +15,7 @@ const getAllSensors = (req, res) => {
     pool.query(sensorQueries.getAllSensors, (error, results) => {
         if (error) {
             const log_message = `There was an error getting all sensors at time ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         res.status(200).json(results.rows);
     });
@@ -33,13 +33,13 @@ const addSensor = (req, res) => {
     pool.query(sensorQueries.checkIfSensorIdExists, [sensor_id], (error, results) => {
         if (error) {
             const log_message = `There was an error checking if the sensor with id: ${sensor_id} exists at time ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         if (results.rows.length === 0) {
             pool.query(sensorQueries.addSensor, [sensor_id, sensor_type, sensor_units, min_value, max_value], (error, results) => {
                 if (error) {
                     const log_message = `There was an error adding the sensor with id: ${sensor_id} at time ${new Date()}`;
-                    pool.query(logQueries.errorLog, [log_message], (error, results));
+                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
                 }
                 res.status(200).json({ message: "Sensor added successfully" });
             });

@@ -14,7 +14,7 @@ const dateRange = (req, res) => {
     pool.query(dailyQueries.getRangeDays, [patient_id, board_id], (error, results) => {
         if (error) {
             const log_message = `Error getting date range for patient_id: ${patient_id} and board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
 
         // Format dates before sending the response
@@ -51,7 +51,7 @@ const getSensorTypesByPatientIdAndDate = (req, res) => {
     pool.query(dailyQueries.getSensorTypesByPatientIdAndDate, [patient_id, day_date, board_id], (error, results) => {
         if (error) {
             const log_message = `Error getting sensor types for patient_id: ${patient_id}, day_date: ${day_date} and board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         res.status(200).json(results.rows);
     });
@@ -69,7 +69,7 @@ const getAverageDataByPatientIdDateAndSensorId = (req, res) => {
     pool.query(dailyQueries.getAverageDataByPatientIdDateAndSensorId, [sensor_id, patient_id, day_date, board_id], (error, results) => {
         if (error) {
             const log_message = `Error getting average data for patient_id: ${patient_id}, day_date: ${day_date}, sensor_id: ${sensor_id} and board_id: ${board_id} at ${new Date()}`;
-            pool.query(logQueries.errorLog, [log_message], (error, results));
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
         }
         res.status(200).json(results.rows);
     });
