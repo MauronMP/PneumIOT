@@ -51,6 +51,11 @@ const Worker = () => {
     navigate(`/removeWorker/${id}`);
   };
 
+  // Redirect to the edit the worker
+  const handleEditWorker = (id) => {
+    navigate(`/editWorker/${id}`);
+  };
+
   // Redirect to the see patients page
   const handleSeePatients = (id) => {
     navigate(`/seePatients/${id}`);
@@ -129,6 +134,7 @@ const Worker = () => {
               colors.yellowAccent[900]
             }
             borderRadius="4px"
+            onClick={() => handleEditWorker(id)}
           >
             {<EditIcon />}
           </Box>

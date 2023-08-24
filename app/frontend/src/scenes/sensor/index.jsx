@@ -41,6 +41,11 @@ const Sensor = () => {
         navigate('/addSensor');
     };
 
+    // Redirect to the edit sensor page
+    const handleEdit = (id) => {
+        navigate(`/editSensor/${id}`);
+    };
+
     // Redirect to the remove sensor page
     const handleDelete = (id) => {
         navigate(`/removeSensor/${id}`);
@@ -60,17 +65,17 @@ const Sensor = () => {
         },
         {
             field: "sensor_units",
-            headerName: "sensor type",
+            headerName: "sensor units",
             flex: 1,
         },
         {
             field: "min_value",
-            headerName: "sensor type",
+            headerName: "Min value",
             flex: 1,
         },
         {
             field: "max_value",
-            headerName: "sensor type",
+            headerName: "Max value",
             flex: 1,
         },
 
@@ -91,6 +96,7 @@ const Sensor = () => {
                             colors.yellowAccent[900]
                         }
                         borderRadius="4px"
+                        onClick={() => handleEdit(id)}
                     >
                         {<EditIcon />}
                     </Box>

@@ -2,7 +2,6 @@ import { Box, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
@@ -69,28 +68,6 @@ const Board = () => {
       field: "sensor_type",
       headerName: "sensor type",
       flex: 1,
-    },
-
-    {
-      field: "Edit",
-      headerName: "Edit board",
-      flex: 1,
-      renderCell: ({ row: { id } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            value={id}
-            justifyContent="center"
-            backgroundColor={colors.yellowAccent[900]}
-            borderRadius="4px"
-          >
-            {<EditIcon />}
-          </Box>
-        );
-      },
     },
     {
       field: "Delete",

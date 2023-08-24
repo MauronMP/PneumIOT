@@ -11,7 +11,7 @@ const Form = () => {
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [errorMessage, setErrorMessage] = useState(null);
-    const { id: worker_id  } = useParams();
+    const { id: worker_id } = useParams();
 
     // Regex for dni validation (8 numbers + 1 letter)
     const dniRegExp = /^\d{8}[A-Z]$/;
@@ -28,7 +28,7 @@ const Form = () => {
             .required("Don't forget the patient ID")
             .matches(dniRegExp, "Invalid patient ID"),
         discharge_date: yup.date().required("Please select a trip end date"),
-        
+
     });
 
     // Set the initial values of the form
@@ -49,13 +49,13 @@ const Form = () => {
 
         values.discharge_date = new Date(values.discharge_date);
         values.worker_id = worker_id;
-      
+
         const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
         };
-      
+
         fetch(`${API_BASE_URL}/patients/`, requestOptions)
             .then((response) => {
                 if (!response.ok) {
@@ -134,7 +134,7 @@ const Form = () => {
                             >
                                 Discharge
                             </Typography>
-                            
+
                             <DateInput
                                 sx={{ gridColumn: "span 2" }}
                                 type="date"
