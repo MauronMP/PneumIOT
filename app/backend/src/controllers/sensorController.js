@@ -117,9 +117,56 @@ const removeSensor = async (req, res) => {
     }
 };
 
+/**
+ * 
+ * Get sensor by id.
+ * 
+ */
+const getSensorById = (req, res) => {
+
+    const sensor_id = req.params.sensor_id;
+
+    pool.query(sensorQueries.getSensorById, [sensor_id] ,(error, results) => {
+        if (error) {
+            const log_message = `There was an error getting the sensor with id: ${sensor_id} at time ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
+        }
+        res.status(200).json(results.rows);
+    });
+};
+
+/**
+ * 
+ * Update sensor by id.
+ * 
+ */
+const editSensor = (req, res) => {
+
+    const { sensor_id, sensor_type, sensor_units, min_value, max_value } = req.body;
+
+    pool.query(sensorQueries.checkIfSensorIdExists, [sensor_id], (error, results) => {
+        if (error) {
+            const log_message = `There was an error checking if the sensor with id: ${sensor_id} exists at time ${new Date()}`;
+            pool.query(logQueries.errorLog, [log_message], (error, results) => {});
+        }
+        if (results.rows.length != 0) {
+            pool.query(sensorQueries.editSensor, [sensor_id, sensor_type, sensor_units, min_value, max_value], (error, results) => {
+                if (error) {
+                    const log_message = `There was an error adding the sensor with id: ${sensor_id} at time ${new Date()}`;
+                    pool.query(logQueries.errorLog, [log_message], (error, results) => {});
+                }
+                res.status(200).json({ message: "Sensor updated successfully" });
+            });
+        } 
+    });
+};
+
+
 // Export all methods
 module.exports = {
     getAllSensors,
+    getSensorById,
+    editSensor,
     addSensor,
     removeSensor,
 };
