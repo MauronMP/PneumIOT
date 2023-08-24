@@ -12,7 +12,7 @@
 INSERT INTO pneumiot.sensor (sensor_id, sensor_type, sensor_units, min_value, max_value)
 VALUES (
     'PM25-2023',
-    'pm25',
+    'Pm25',
     'µg/m³',    
     0,
     99
@@ -21,7 +21,7 @@ VALUES (
 INSERT INTO pneumiot.sensor (sensor_id, sensor_type, sensor_units, min_value, max_value)
 VALUES (
     'OZON-2023',
-    'ozone',
+    'Ozone',
     'µg/m³',
     0,
     99
@@ -30,7 +30,7 @@ VALUES (
 INSERT INTO pneumiot.sensor (sensor_id, sensor_type, sensor_units, min_value, max_value)
 VALUES (
     'HUMI-2023',
-    'humidity',
+    'Humidity',
     '%',
     0,
     99
@@ -39,7 +39,7 @@ VALUES (
 INSERT INTO pneumiot.sensor (sensor_id, sensor_type, sensor_units, min_value, max_value)
 VALUES (
     'TEMP-2023',
-    'temperature',
+    'Temperature',
     'ºC',
     0,
     99
