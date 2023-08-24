@@ -10,7 +10,11 @@ const removePatient = "DELETE FROM pneumiot.patient WHERE patient_id = $1";
 
 const getPatientByBoardId = "SELECT patient_id FROM pneumiot.patient WHERE board_id = $1";
 
+const getPatientByBoardIdAndPatientId = "SELECT * FROM pneumiot.patient WHERE board_id = $1 AND patient_id = $2";
+
 const deletePatientsByBoardId = "DELETE FROM pneumiot.patient WHERE board_id = $1";
+
+const editPatient = "UPDATE pneumiot.patient SET discharge_date = $3, admission_date = $4 WHERE board_id = $1 and patient_id = $2";
 
 module.exports = {
     getPatients,
@@ -20,4 +24,6 @@ module.exports = {
     removePatient,
     getPatientByBoardId,
     deletePatientsByBoardId,
+    getPatientByBoardIdAndPatientId,
+    editPatient,
 };
