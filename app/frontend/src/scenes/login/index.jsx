@@ -76,7 +76,7 @@ const Form = () => {
                 }
             })
             .catch((error) => {
-                setErrorMessage("Error en el servidor");
+                setErrorMessage("Server error");
             });
     };
 

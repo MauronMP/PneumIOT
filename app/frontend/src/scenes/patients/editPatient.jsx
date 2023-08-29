@@ -50,7 +50,7 @@ const Form = () => {
         };
     
         const requestOptions = {
-            method: "PUT", // Use "PATCH" if you're partially updating
+            method: "PUT", 
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(valuesToUpdate),
         };

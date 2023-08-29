@@ -134,7 +134,7 @@ const Sensor = () => {
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="Boards" subtitle="Managing boards" />
+                <Header title="Sensors" subtitle="Managing sensors" />
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Button
                             sx={{

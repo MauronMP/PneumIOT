@@ -160,7 +160,6 @@ const Sidebar = () => {
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
-
                                 <Item
                                     title="Add a worker"
                                     to="/addWorker"
