@@ -11,7 +11,7 @@ const removeWorker = "DELETE FROM pneumiot.worker WHERE worker_id = $1";
 const getRoleByWorkerId = "SELECT worker_role FROM pneumiot.worker WHERE worker_id = $1";
 
 const loginWorker = `
-    SELECT pneumiot.worker.worker_id, worker_email, passwd_auth, worker_name, worker_role
+    SELECT pneumiot.worker.worker_id, worker_email, pneumiot.worker_auth.passwd_auth, worker_name, worker_role
     FROM pneumiot.worker_auth
     INNER JOIN pneumiot.worker
     ON pneumiot.worker_auth.worker_id = pneumiot.worker.worker_id

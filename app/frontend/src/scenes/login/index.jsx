@@ -55,7 +55,7 @@ const Form = () => {
      */
     const handleSubmit = (values) => {
 
-        fetch(`${API_BASE_URL}/worker/login/${values.email}/${encodeURIComponent(values.userpassword)}`)
+        fetch(`${API_BASE_URL}/worker/login/${values.email}/${(values.userpassword)}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
