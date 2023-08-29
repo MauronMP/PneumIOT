@@ -4,6 +4,7 @@ services:
   frontend:
     build:
       context: ./app/frontend
+    image: spl720/frontend:latest
     ports:
       - "5000:5000"
     depends_on:
@@ -12,6 +13,7 @@ services:
   backend:
     build:
       context: ./app/backend
+    image: spl720/backend:latest
     ports:
       - "3000:3000"
     depends_on:
@@ -20,6 +22,7 @@ services:
   database:
     build:
       context: ./app/database
+    image: spl720/database:latest
     restart: always
     environment:
       POSTGRES_USER: postgres
