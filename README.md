@@ -2,7 +2,7 @@
 
 # TL:DR
 
-This is a final degree project that aims to implement an environmental monitoring system in the homes of affected patients.
+This project aims to implement an environmental monitoring system in the homes of affected patients.
 This system would be designed to carry out an exhaustive analysis of the air quality in the home environment. In this way, it would be possible to assess the patient's condition while they are at home, allowing a more accurate study of possible relapses to which they are prone due to the chronic nature of their condition.
 The target population for this study focuses on patients with chronic respiratory diseases, such as asthma, chronic obstructive pulmonary disease (COPD) and other recurrent respiratory conditions. These people are particularly susceptible to air quality, and small variations in pollutant levels or humidity can have a significant impact on their health and quality of life.
 
