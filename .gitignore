@@ -1,3 +1,5 @@
+# GitIgnore MauronMP
+
 # Ignore node_modules and build directories for frontend
 node_modules 
 frontend/.pnp

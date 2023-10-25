@@ -30,7 +30,7 @@ individuals.
 
 ### 0. Repository
 
-In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. Milestone 0 documentation [here](https://github.com/MauronMP/PneumIOT/docs/Milestone/0_Repository.md)
+In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. Milestone 0 documentation [here](docs/Milestones/0_Repository/0_Repository.md)
 
 
 ## :hammer: Tools used for development
