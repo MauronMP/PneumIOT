@@ -30,7 +30,11 @@ individuals.
 
 ### 0. Repository
 
-In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. Milestone 0 documentation [here](docs/Milestones/0_Repository/0_Repository.md)
+In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. [:arrow_forward:](docs/Milestones/0_Repository/0_Repository.md)
+
+### 1. Project planning
+
+Define a project among the different possibilities that arise and organize the milestones for the work on it, as well as advance as much as possible in the interface and data structures of the initial classes that are going to be implemented. [:arrow_forward:](docs/Milestones/1_Proyect/1_Proyect.md)
 
 
 ## :hammer: Tools used for development

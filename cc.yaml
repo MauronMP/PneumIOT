@@ -1,0 +1,5 @@
+# Implemented classes
+entidad: 
+  - app/backend/*
+  - app/database/*
+  - app/frontend/*
