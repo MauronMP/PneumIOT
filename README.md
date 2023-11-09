@@ -30,14 +30,16 @@ individuals.
 
 ### 0. Repository
 
-In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. [Aqui: :arrow_forward:](docs/Milestones/0_Repository/0_Repository.md)
+In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. [Here: :arrow_forward:](docs/Milestones/0_Repository/0_Repository.md)
 
 ### 1. Project planning
 
-Define a project among the different possibilities that arise and organize the milestones for the work on it, as well as advance as much as possible in the interface and data structures of the initial classes that are going to be implemented. [Aqui: :arrow_forward:](docs/Milestones/1_Proyect/1_Proyect.md)
+Define a project among the different possibilities that arise and organize the milestones for the work on it, as well as advance as much as possible in the interface and data structures of the initial classes that are going to be implemented. [Here: :arrow_forward:](docs/Milestones/1_Proyect/1_Proyect.md)
 
 ### 2. Tests
-Add tests and the application's virtual infrastructure, dependency and/or task managers, necessary for the tests to run. [Aqui: :arrow_forward:](docs/Milestones/2_Tests/2_Test.md)
+Add tests and the application's virtual infrastructure, dependency and/or task managers, necessary for the tests to run. [Here: :arrow_forward:](docs/Milestones/2_Tests/2_Test.md)
+
+[Tests code HERE: :arrow_forward: ](app/backend/tests/index.test.js)
 
 ![Tests](docs/img/Milestone_2/M_2_tests.png)
 
