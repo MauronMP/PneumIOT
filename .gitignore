@@ -1,7 +1,7 @@
 # GitIgnore MauronMP
 
 # Ignore node_modules and build directories for frontend
-node_modules 
+frontend/node_modules 
 frontend/.pnp
 frontend/.pnp.js
 frontend/coverage
@@ -16,3 +16,6 @@ frontend/.env.production.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+
+# Ignore node_modules for backend
+app/backend/node_modules/*

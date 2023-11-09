@@ -80,52 +80,54 @@ const getWorkerByRole = (req, res) => {
  *  - workerAuthQueries.addWorkerAuth -> to add the worker to the worker_auth table
  * 
  */
-const addWorker = (req, res) => {
-
+const addWorker = async (req, res) => {
     const { worker_id, worker_email, worker_name, worker_surname, worker_role, passwd_auth } = req.body;
-
-    // Perform both queries asynchronously and return promises
-    const query1 = new Promise((resolve, reject) => {
-        pool.query(workerQueries.addWorker, [worker_id, worker_email, worker_name, worker_surname, worker_role], (error, results) => {
-            if (error) {
-                const log_message = `There was an error adding the worker with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results) => { });
-                reject(error);
-            } else {
-                const log_message = `Added a new worker with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => { });
-                resolve(results);
-            }
-        });
-    });
-
-    const query2 = new Promise((resolve, reject) => {
+    
+    try {
+        // Query 1: Agregar el trabajador
+        await executeQuery(workerQueries.addWorker, [worker_id, worker_email, worker_name, worker_surname, worker_role], `Added a new worker with worker_id: ${worker_id}`);
+        
+        // Query 2: Agregar la autenticación del trabajador
         const hash = crypto.createHash('sha256');
         hash.update(passwd_auth);
         const hashedPassword = hash.digest('hex');
+        await executeQuery(workerAuthQueries.addWorkerAuth, [worker_id, hashedPassword], `Added a new workerAuth with worker_id: ${worker_id}`);
+        
+        // Respondemos con éxito si todas las queries se ejecutan correctamente
+        res.status(200).send("Worker added successfully");
+    } catch (error) {
+        // En caso de error en cualquiera de las queries, respondemos con un error del servidor
+        console.error(`Error adding worker: ${error}`);
+        res.status(500).send("Server error");
+    }
+};
 
-        pool.query(workerAuthQueries.addWorkerAuth, [worker_id, hashedPassword], (error, results) => {
+// Función para ejecutar una query y registrar un log
+const executeQuery = (query, values, logMessage) => {
+    return new Promise((resolve, reject) => {
+        pool.query(query, values, (error, results) => {
             if (error) {
-                const log_message = `There was an error adding the workerAuth with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.errorLog, [log_message], (error, results) => { });
+                const errorLogMessage = `Error: ${logMessage}`;
+                pool.query(logQueries.errorLog, [errorLogMessage], (logError) => {
+                    if (logError) {
+                        console.error(`Error logging: ${logError}`);
+                    }
+                });
                 reject(error);
             } else {
-                const log_message = `Added a new workerAuth with worker_id: ${worker_id} at ${new Date()}`;
-                pool.query(logQueries.workerLog, [worker_id, log_message], (error, results) => { });
+                const successLogMessage = `Success: ${logMessage}`;
+                const worker_id = values[0];
+                pool.query(logQueries.workerLog, [worker_id, successLogMessage], (logError) => {
+                    if (logError) {
+                        console.error(`Error logging: ${logError}`);
+                    }
+                });
                 resolve(results);
             }
         });
     });
-
-    // Execute both queries and handle the results
-    Promise.all([query1, query2])
-        .then(() => {
-            res.send(req.body);
-        })
-        .catch((error) => {
-            res.status(500).send("Server error");
-        });
 };
+
 
 /**
  * 
@@ -268,7 +270,7 @@ const loginWorker = (req, res) => {
 
             // Compare hashes to verify the password
             if (storedHashedPassword === providedHashedPassword) {
-                res.status(200).json(results.rows);
+                rres.status(200).send("Worker updated successfully");
             } else {
                 res.status(200).json("");
             }

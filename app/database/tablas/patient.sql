@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS pneumiot.patient (
 );
 
 
-INSERT INTO pneumiot.patient (patient_id, board_id, discharge_date, admission_date)
+INSERT INTO pneumiot.patient (patient_id, board_id, discharge_date, admission_date);
+
 SELECT b.patient_id, b.board_id,
        CURRENT_TIMESTAMP AT TIME ZONE 'UTC' - INTERVAL '4 hours' + INTERVAL '1 minute' * (v.num - 1) AS discharge_date,
        CURRENT_TIMESTAMP AT TIME ZONE 'UTC' - INTERVAL '4 hours' + INTERVAL '1 minute' * (v.num - 1) AS admission_date

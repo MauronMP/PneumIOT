@@ -3,3 +3,9 @@ entidad:
   - app/backend/*
   - app/database/*
   - app/frontend/*
+lenguaje:
+  - JavaScript
+test:
+  - app/backend/tests/index.test.js
+fichero_tareas:
+  - npx jest --forceExit
