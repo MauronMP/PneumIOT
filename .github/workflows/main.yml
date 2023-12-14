@@ -50,9 +50,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} docker.pkg.github.com --password-stdin
 
       - name: Publish to GitHub Packages
-        run: docker tag ${{ matrix.image }} docker.pkg.github.com/${{ github.repository }}/$(echo "${{ matrix.image }}" | tr '[:upper:]' '[:lower:]'):${{ steps.meta.outputs.tags }}
-      
-      
+        run: docker tag ${{ matrix.image }} docker.pkg.github.com/${{ github.repository }}/$({ echo "${{ matrix.image }}" | awk '{print tolower($0)}' }):${{ steps.meta.outputs.tags }}      
         
       - name: Push to GitHub Packages
         run: docker push docker.pkg.github.com/${{ github.repository }}/${{ matrix.image }}:${{ steps.meta.outputs.tags }}
