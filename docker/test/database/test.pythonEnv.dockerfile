@@ -19,7 +19,6 @@ COPY app/database/pyproject.toml app/database/poetry.lock app/database/tasks.py 
 # Elimina los archivos de configuración de Poetry
 RUN poetry install
 
-# Crea el directorio de pruebas y copia los archivos de prueba
 RUN mkdir -p /tests
 COPY app/database/tests/* /tests/
 
