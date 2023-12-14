@@ -33,8 +33,11 @@ jobs:
         id: build_database
         uses: docker/build-push-action@v2
         with:
-          context: ../../
-          dockerfile: docker/test/database/test.dockerfile
+          context: ./
+          run: |
+            pwd
+            ls
+          dockerfile: /docker/test/database/test.dockerfile
           push: true
           tags: spl720/test_database:latest
 
@@ -49,6 +52,9 @@ jobs:
         id: build_python
         uses: docker/build-push-action@v2
         with:
+          run: |
+            pwd
+            ls
           dockerfile: docker/test/database/test.pythonEnv.dockerfile
           push: true
           tags: spl720/test_python_database:latest
