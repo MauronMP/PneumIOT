@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: ci
 
 on:
   push:
@@ -11,80 +11,37 @@ on:
     types: [published]
 
 jobs:
-  build_and_push:
-    name: Build and Push
+  docker:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - image: ghcr.io/spl720/test_database
+            dockerfile: docker/test/database/test.dockerfile
+          - image: ghcr.io/spl720/test_python_database
+            dockerfile: docker/test/database/test.pythonEnv.dockerfile
 
     steps:
-      - name: Listing contents before checkout
-        run: |
-          pwd
-          ls
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push database image
-        id: build_database
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          run: |
-            pwd
-            ls
-          dockerfile: /docker/test/database/test.dockerfile
-          push: true
-          tags: spl720/test_database:latest
-
-      - name: Check if database image build failed
-        run: |
-          if [ ${{ steps.build_database.outcome }} != 'success' ]; then
-            echo "Failed to build and push the database image. Check the logs for details."
-            exit 1
-          fi
-
-      - name: Build and push Python image
-        id: build_python
-        uses: docker/build-push-action@v2
-        with:
-          run: |
-            pwd
-            ls
-          dockerfile: docker/test/database/test.pythonEnv.dockerfile
-          push: true
-          tags: spl720/test_python_database:latest
-
-      - name: Check if Python image build failed
-        run: |
-          if [ ${{ steps.build_python.outcome }} != 'success' ]; then
-            echo "Failed to build and push the Python image. Check the logs for details."
-            exit 1
-          fi
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN_GITHUB }}
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v4
         with:
-          images: |
-            spl720/test_python_database
-            ghcr.io/${{ github.repository }}
+          images: ${{ matrix.image }}
 
-      - name: Build and push Docker images to GitHub Container Registry
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+      - name: Build and push
+        uses: docker/build-push-action@v4
         with:
           context: .
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
