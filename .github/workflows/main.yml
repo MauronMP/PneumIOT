@@ -1,4 +1,5 @@
 name: Build & publish images
+
 on:
   release:
     types: [published]
@@ -48,7 +49,7 @@ jobs:
       - name: Build and push Docker image Test Database
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: ../
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta_test_database.outputs.tags }}
