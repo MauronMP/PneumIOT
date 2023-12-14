@@ -16,9 +16,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - image: ghcr.io/spl720/test_database
+          - image: ghcr.io/MauronMP/test_database
             dockerfile: docker/test/database/test.dockerfile
-          - image: ghcr.io/spl720/test_python_database
+          - image: ghcr.io/MauronMP/test_python_database
             dockerfile: docker/test/database/test.pythonEnv.dockerfile
 
     steps:
