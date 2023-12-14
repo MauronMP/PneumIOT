@@ -28,7 +28,7 @@ jobs:
       - name: Build and push database image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ../
           dockerfile: docker/test/database/test.dockerfile
           push: true
           tags: spl720/test_database:latest
@@ -36,7 +36,7 @@ jobs:
       - name: Build and push Python image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ../
           dockerfile: docker/test/database/test.pythonEnv.dockerfile
           push: true
           tags: spl720/test_python_database:latest
