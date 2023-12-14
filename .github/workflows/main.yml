@@ -46,12 +46,11 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Tag Docker Image for GitHub Packages
+        run: docker tag ${{ matrix.image }} docker.pkg.github.com/${{ github.repository }}/${{ matrix.image }}:main
+
       - name: Configure Docker for GitHub Packages
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} docker.pkg.github.com --password-stdin
 
-      - name: Publish to GitHub Packages
-        run: docker push docker.pkg.github.com/${{ github.repository }}/${{ matrix.image }}:main
-
-
       - name: Push to GitHub Packages
-        run: docker push docker.pkg.github.com/${{ github.repository }}/${{ matrix.image }}:${{ steps.meta.outputs.tags }}
+        run: docker push docker.pkg.github.com/${{ github.repository }}/${{ matrix.image }}:main
