@@ -1,19 +1,26 @@
-name: Build and Push Docker Images
-
+name: Build & publish images
 on:
-  push:
-    paths:
-      - 'app/database/pyproject.toml'
-      - 'app/database/poetry.lock'
-      - 'docker/test/database/test.dockerfile'
-      - 'docker/test/database/test.pythonEnv.dockerfile'
   release:
     types: [published]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  build_and_push:
-    name: Build and Push
+  build-and-push-image:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: docker/test/database/test.dockerfile
+            image: ghcr.io/MauronMP/test_database
+          - dockerfile: docker/test/database/test.pythonEnv.dockerfile
+            image: ghcr.io/MauronMP/test_python_database
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -25,49 +32,39 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push database image
-        uses: docker/build-push-action@v2
-        with:
-          context: ../
-          dockerfile: docker/test/database/test.dockerfile
-          push: true
-          tags: spl720/test_database:latest
-
-      - name: Build and push Python image
-        uses: docker/build-push-action@v2
-        with:
-          context: ../
-          dockerfile: docker/test/database/test.pythonEnv.dockerfile
-          push: true
-          tags: spl720/test_python_database:latest
-
       - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      - name: Extract metadata (tags, labels) for Docker - Test Database
+        id: meta_test_database
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: |
-            spl720/test_python_database
-            ghcr.io/${{ github.repository }}
+          images: ${{ matrix.image }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta_database
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: |
-            spl720/test_database
-            ghcr.io/${{ github.repository }}
-
-      - name: Build and push Docker images to GitHub Container Registry
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+      - name: Build and push Docker image Test Database
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
+          file: ${{ matrix.dockerfile }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta_test_database.outputs.tags }}
+          labels: ${{ steps.meta_test_database.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for Docker - Test Python Database
+        id: meta_test_python_database
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ matrix.image }}
+
+      - name: Build and push Docker image Test Python Database
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta_test_python_database.outputs.tags }}
+          labels: ${{ steps.meta_test_python_database.outputs.labels }}
