@@ -49,6 +49,7 @@ jobs:
       - name: Configure Docker for GitHub Packages
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u ${{ github.actor }} docker.pkg.github.com --password-stdin
 
+        
       - name: Publish to GitHub Packages
         run: docker tag ${{ matrix.image }}
 
