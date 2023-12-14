@@ -26,6 +26,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push database image
+        id: build_database
         uses: docker/build-push-action@v2
         with:
           context: ../
@@ -33,13 +34,28 @@ jobs:
           push: true
           tags: spl720/test_database:latest
 
+      - name: Check if database image build failed
+        run: |
+          if [ ${{ steps.build_database.outcome }} != 'success' ]; then
+            echo "Failed to build and push the database image. Check the logs for details."
+            exit 1
+          fi
+
       - name: Build and push Python image
+        id: build_python
         uses: docker/build-push-action@v2
         with:
           context: ../
           dockerfile: docker/test/database/test.pythonEnv.dockerfile
           push: true
           tags: spl720/test_python_database:latest
+
+      - name: Check if Python image build failed
+        run: |
+          if [ ${{ steps.build_python.outcome }} != 'success' ]; then
+            echo "Failed to build and push the Python image. Check the logs for details."
+            exit 1
+          fi
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -48,34 +64,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
 
-      - name: Extract metadata (tags, labels) for Docker - Test Python Database
-        id: meta_test_python_database
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: |
             spl720/test_python_database
             ghcr.io/${{ github.repository }}
 
-      - name: Extract metadata (tags, labels) for Docker - Test Database
-        id: meta_test_database
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: |
-            spl720/test_database
-            ghcr.io/${{ github.repository }}
-
-      - name: Build and push Docker image Test Python Database
+      - name: Build and push Docker images to GitHub Container Registry
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
           context: .
           push: true
-          tags: ${{ steps.meta_test_python_database.outputs.tags }}
-          labels: ${{ steps.meta_test_python_database.outputs.labels }}
-
-      - name: Build and push Docker image Test Database
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta_test_database.outputs.tags }}
-          labels: ${{ steps.meta_test_database.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
