@@ -1,0 +1,73 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    paths:
+      - 'app/database/pyproject.toml'
+      - 'app/database/poetry.lock'
+      - 'docker/test/database/test.dockerfile'
+      - 'docker/test/database/test.pythonEnv.dockerfile'
+  release:
+    types: [published]
+
+jobs:
+  build_and_push:
+    name: Build and Push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push database image
+        uses: docker/build-push-action@v2
+        with:
+          context: ../
+          dockerfile: docker/test/database/test.dockerfile
+          push: true
+          tags: spl720/test_database:latest
+
+      - name: Build and push Python image
+        uses: docker/build-push-action@v2
+        with:
+          context: ../
+          dockerfile: docker/test/database/test.pythonEnv.dockerfile
+          push: true
+          tags: spl720/test_python_database:latest
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN_GITHUB }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: |
+            spl720/test_python_database
+            ghcr.io/${{ github.repository }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: |
+            spl720/test_database
+            ghcr.io/${{ github.repository }}
+
+      - name: Build and push Docker images to GitHub Container Registry
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

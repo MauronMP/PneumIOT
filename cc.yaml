@@ -7,5 +7,7 @@ lenguaje:
   - JavaScript
 test:
   - app/backend/tests/index.test.js
+  - app/database/tests/test_database.py
 fichero_tareas:
   - npx jest --forceExit
+  - inv test

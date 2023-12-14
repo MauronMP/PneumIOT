@@ -19,3 +19,15 @@ frontend/yarn-error.log*
 
 # Ignore node_modules for backend
 app/backend/node_modules/*
+
+
+# Ignore pytest cache and metadata directories
+**/__pycache__/
+**/.pytest_cache/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/*.pyi
+**/*.pyw
+**/*.pytest_cache/
+**/__pycache__/
