@@ -29,6 +29,8 @@ jobs:
         id: build_database
         uses: docker/build-push-action@v2
         with:
+          run: pwd
+          context: ../../
           dockerfile: docker/test/database/test.dockerfile
           push: true
           tags: spl720/test_database:latest
