@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  database:
+    build:
+      context: ../
+      dockerfile: docker/test/database/test.dockerfile
+    image: spl720/test_database:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  test:
+    build:
+      context: ../
+      dockerfile: docker/test/database/test.pythonEnv.dockerfile
+    image: spl720/test_python_database:latest
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
