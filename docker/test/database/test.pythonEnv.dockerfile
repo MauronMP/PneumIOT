@@ -14,6 +14,7 @@ RUN export PYTHONDONTWRITEBYTECODE=1
 
 # Actualiza pip y Poetry
 RUN pip install --upgrade pip poetry
+
 COPY app/database/pyproject.toml app/database/poetry.lock app/database/tasks.py  ./ 
 
 # Elimina los archivos de configuración de Poetry
