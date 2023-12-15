@@ -1,12 +1,11 @@
 # Set the base image
 FROM postgres:latest
 
-
-# # Copy the script to generate the database
+# Copy the script to generate the database
 COPY /app/database/init-db.sql /docker-entrypoint-initdb.d/
-# # Copy the script to insert data
+# Copy the script to insert data
 COPY /app/database/insert-data.sql /docker-entrypoint-initdb.d/
 
-# Otorgar permisos de ejecución
+# Grant execution permissions
 RUN chmod +x /docker-entrypoint-initdb.d/init-db.sql
 RUN chmod +x /docker-entrypoint-initdb.d/insert-data.sql

@@ -1,32 +1,32 @@
-# Utiliza la imagen oficial de Python 3.10
+# Use the official Python 3.10 image
 FROM python:3.10
 
-# Crea el directorio de la aplicación de prueba
+# Create the test application directory
 RUN mkdir -p /app/test
 
-# Configura el entorno virtual de Python
+# Configure the Python virtual environment
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Evita la generación de archivos bytecode de Python
+# Avoid generating Python bytecode files
 RUN export PYTHONDONTWRITEBYTECODE=1
 
-# Actualiza pip y Poetry
+# Update pip and Poetry
 RUN pip install --upgrade pip poetry
 
-
+# Copy the necessary files for Poetry to install dependencies
 COPY app/database/pyproject.toml app/database/poetry.lock app/database/tasks.py  ./ 
 
-
+# Install Python dependencies using Poetry
 RUN poetry install
 
-# Crea el directorio de pruebas y copia los archivos de prueba
+# Create the tests directory and copy test files
 RUN mkdir -p /tests
 COPY app/database/tests/* /tests/
 
-# Establece el directorio de trabajo
+# Set the working directory
 WORKDIR /tests
 
-# Establece el punto de entrada del contenedor para ejecutar los tests con Invoke
+# Set the container entry point to run tests with Invoke
 ENTRYPOINT ["inv", "test"]

@@ -1,4 +1,4 @@
-name: ci
+name: Publish Docker image and github packages
 
 on:
   push:
@@ -16,6 +16,7 @@ jobs:
       contents: read
       packages: write
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         include:
@@ -40,7 +41,6 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
-
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
