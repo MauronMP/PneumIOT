@@ -48,7 +48,7 @@ Add tests and the application's virtual infrastructure, dependency and/or task m
 Design a reproducible testing environment using Docker for easy execution of unit tests. Ensure correct installation of necessary tools, understanding container packaging, and submit a Dockerfile to a public repository. Evaluation based on base container choice, Dockerfile quality, Docker Hub upload, and utilization of alternative container registries. Emphasis on creating realistic tests and potential integration with continuous deployment systems.
 
 * [Docker decision documentation :arrow_forward:](docs/Milestones/3_Docker/Docker_Decision.md)
-* [Github actions documentation: :arrow_forward:](docs/Milestones/3_Docker/GithubActions.md.md)
+* [Github actions documentation: :arrow_forward:](docs/Milestones/3_Docker/GithubActions.md)
 
 
 #### Demostration:
@@ -58,8 +58,15 @@ Design a reproducible testing environment using Docker for easy execution of uni
 
 ![Github packages](docs/img/Milestone_3/github_packages.png)
 
+
+#### Database tests:
+The tests created to test the database part of the database, use poetry, invoke and pytest.
+
+* [Database tests documentation: :arrow_forward:](docs/Milestones/2_Tests/3_Database_Test.md)
+
 #### Docker tests and docker-compose:
 The created tests use two dockers, the first one is based on postgresql and the second one is based on python that connects with the first docker to make a verification test of the existence of the tables created in the database, for the communication docker compose is used as an orchestrator between both dockerfiles.
+
 
 ![Run test on docker composer](docs/img/Milestone_3/docker_compose_run_test.png)
 
