@@ -30,16 +30,16 @@ individuals.
 
 ### 0. Repository
 
-In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. [Here: :arrow_forward:](docs/Milestones/0_Repository/0_Repository.md)
+In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. [Here :arrow_forward:](docs/Milestones/0_Repository/0_Repository.md)
 
 ### 1. Project planning
 
-Define a project among the different possibilities that arise and organize the milestones for the work on it, as well as advance as much as possible in the interface and data structures of the initial classes that are going to be implemented. [Here: :arrow_forward:](docs/Milestones/1_Proyect/1_Proyect.md)
+Define a project among the different possibilities that arise and organize the milestones for the work on it, as well as advance as much as possible in the interface and data structures of the initial classes that are going to be implemented. [Here :arrow_forward:](docs/Milestones/1_Proyect/1_Proyect.md)
 
 ### 2. Tests
-Add tests and the application's virtual infrastructure, dependency and/or task managers, necessary for the tests to run. [Here: :arrow_forward:](docs/Milestones/2_Tests/2_Test.md)
+Add tests and the application's virtual infrastructure, dependency and/or task managers, necessary for the tests to run. [Here :arrow_forward:](docs/Milestones/2_Tests/2_Test.md)
 
-[Tests code HERE: :arrow_forward: ](app/backend/tests/index.test.js)
+[Tests code HERE :arrow_forward: ](app/backend/tests/index.test.js)
 
 ![Tests](docs/img/Milestone_2/M_2_tests.png)
 
@@ -48,7 +48,7 @@ Add tests and the application's virtual infrastructure, dependency and/or task m
 Design a reproducible testing environment using Docker for easy execution of unit tests. Ensure correct installation of necessary tools, understanding container packaging, and submit a Dockerfile to a public repository. Evaluation based on base container choice, Dockerfile quality, Docker Hub upload, and utilization of alternative container registries. Emphasis on creating realistic tests and potential integration with continuous deployment systems.
 
 * [Docker decision documentation :arrow_forward:](docs/Milestones/3_Docker/Docker_Decision.md)
-* [Github actions documentation: :arrow_forward:](docs/Milestones/3_Docker/GithubActions.md)
+* [Github actions documentation :arrow_forward:](docs/Milestones/3_Docker/GithubActions.md)
 
 
 #### Demostration:
@@ -62,7 +62,7 @@ Design a reproducible testing environment using Docker for easy execution of uni
 #### Database tests:
 The tests created to test the database part of the database, use poetry, invoke and pytest.
 
-* [Database tests documentation: :arrow_forward:](docs/Milestones/2_Tests/3_Database_Test.md)
+* [Database tests documentation :arrow_forward:](docs/Milestones/2_Tests/3_Database_Test.md)
 
 #### Docker tests and docker-compose:
 The created tests use two dockers, the first one is based on postgresql and the second one is based on python that connects with the first docker to make a verification test of the existence of the tables created in the database, for the communication docker compose is used as an orchestrator between both dockerfiles.
