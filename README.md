@@ -26,18 +26,16 @@ adaptable solution that can be applied in various situations and contexts,
 thus providing a greater positive impact on the health and well-being of
 individuals.
 
-## :rocket: Milestones
-
-### 0. Repository
+### 0. :scroll: Repository
 
 In this milestone we have to show that we correctly understand the concept of the application to be deployed in the cloud, as well as demonstrate our knowledge of the use of common software development tools. [Here :arrow_forward:](docs/Milestones/0_Repository/0_Repository.md)
 
-### 1. Project planning
+### 1. :construction_worker: Project planning
 
 Define a project among the different possibilities that arise and organize the milestones for the work on it, as well as advance as much as possible in the interface and data structures of the initial classes that are going to be implemented. [Here :arrow_forward:](docs/Milestones/1_Proyect/1_Proyect.md)
 
-### 2. Tests
-Add tests and the application's virtual infrastructure, dependency and/or task managers, necessary for the tests to run. [Here :arrow_forward:](docs/Milestones/2_Tests/2_Backend_Test.md)
+### 2. :white_check_mark: Tests
+Add tests and the application's virtual infrastructure, dependency and/or task managers, necessary for the tests to run. [Here :arrow_forward:](docs/Milestones/2_Tests/2_Tests.md)
 
 ### 3. :whale: Docker and Github actions
 
