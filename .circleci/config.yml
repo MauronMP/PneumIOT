@@ -1,13 +1,8 @@
 version: 2.1
-orbs:
-  python: circleci/python@2.0.3
-
-env:
-  COMPOSE_FILE: docker/docker-compose.test.yml
 jobs:
     test_docker:
       machine:
-        image: ubuntu-2004:202010-01
+        image: ubuntu-2204:current
       steps:
         - checkout
         - run:
