@@ -1,31 +1,27 @@
 version: 2.1
 jobs:
-  test_base: &test_base
-    machine:
-      image: ubuntu-2204:current
-    steps:
-      - checkout
-      - run:
-          name: "Docker compose tests for database"
-          command: *docker_compose_command
-
-  test_docker:
-    <<: *test_base
-    environment:
-      docker_compose_command: |
-        docker pull spl720/test_python_database:latest
-        docker pull spl720/test_database:latest
-        docker-compose -f docker/docker-compose.test.yml run test
-
-  test_github_containers:
-    <<: *test_base
-    environment:
-      docker_compose_command: |
-        docker pull ghcr.io/mauronmp/pneumiot:main
-        docker-compose -f docker/docker-compose.test.yml run test
-
+    test_docker:
+      machine:
+        image: ubuntu-2204:current
+      steps:
+        - checkout
+        - run:
+            name: "Docker compose tests for database"
+            command: |
+              docker pull spl720/test_python_database:latest
+              docker pull spl720/test_database:latest
+              docker-compose -f docker/docker-compose.test.yml run test   
+    test_github_containers:
+      machine:
+        image: ubuntu-2204:current
+      steps:
+        - checkout
+        - run:
+            name: "Docker compose tests for database"
+            command: |
+              docker pull ghcr.io/mauronmp/pneumiot:main
+              docker-compose -f docker/docker-compose.test.yml run test  
 workflows:
-  version: 2
   test_my_app:
     jobs:
       - test_docker
