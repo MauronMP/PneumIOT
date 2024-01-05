@@ -11,7 +11,7 @@ jobs:
               docker pull spl720/test_python_database:latest
               docker pull spl720/test_database:latest
               docker-compose -f docker/docker-compose.test.yml run test   
-    test_github_container:
+    test_github_containers:
       machine:
         image: ubuntu-2204:current
       steps:
