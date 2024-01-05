@@ -31,3 +31,5 @@ app/backend/node_modules/*
 **/*.pyw
 **/*.pytest_cache/
 **/__pycache__/
+
+.vscode
