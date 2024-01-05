@@ -1,0 +1,25 @@
+name: Running docker tests
+on: 
+    workflow_run:
+        workflows: ["Publish Docker image and github packages"]
+        types:
+            - completed
+jobs: 
+    test:
+        name: Run test suite
+        runs-on: ubuntu-latest
+        env:
+            COMPOSE_FILE: docker/docker-compose.test.yml
+            DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Login to DockerHub
+              run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+            - name: Build docker images
+              run: docker-compose build
+            - name: Run tests
+              run: docker-compose run test
