@@ -41,6 +41,10 @@ Add tests and the application's virtual infrastructure, dependency and/or task m
 
 Design a reproducible testing environment using Docker for easy execution of unit tests. Ensure correct installation of necessary tools, understanding container packaging, and submit a Dockerfile to a public repository. Evaluation based on base container choice, Dockerfile quality, Docker Hub upload, and utilization of alternative container registries. Emphasis on creating realistic tests and potential integration with continuous deployment systems. [Here :arrow_forward:](docs/Milestones/3_Docker/Docker.md)
 
+### 4. :green_heart: Continuous Integration
+
+The main goal of this project milestone is to add continuous integration (CI) to it. The three sub-goals are to learn how to describe the version of the programming language used in the project and the infrastructure it needs to function, as well as the selection of a system and site for continuous integration and its configuration. [Here :arrow_forward:](docs/Milestones/4_CI/CI.md)
+
 ## :hammer: Tools used for development
 
 ### Programming Languages
