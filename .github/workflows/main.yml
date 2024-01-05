@@ -1,4 +1,4 @@
-name: Publish Docker image and github packages
+name: Publish_Docker_image_and_github_packages
 
 on:
   push:
