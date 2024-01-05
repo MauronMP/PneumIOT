@@ -15,7 +15,7 @@ jobs:
             command: |
               docker pull spl720/test_python_database:latest
               docker pull spl720/test_database:latest
-              docker-compose run test   
+              docker-compose -f docker/docker-compose.test.yml run test   
               
 workflows:
   test_my_app:
