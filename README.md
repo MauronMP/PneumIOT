@@ -45,6 +45,15 @@ Design a reproducible testing environment using Docker for easy execution of uni
 
 The main goal of this project milestone is to add continuous integration (CI) to it. The three sub-goals are to learn how to describe the version of the programming language used in the project and the infrastructure it needs to function, as well as the selection of a system and site for continuous integration and its configuration. [Here :arrow_forward:](docs/Milestones/4_CI/CI.md)
 
+### 5. 📖 Microservices
+
+Choice and justification of the different frameworks used for microservices are defined. A complete documentation and design of the API have been carried out, and a set of containers has been raised for the realization and visualization of logs using the Elastic Stack, as well as the continuation with the implementation of the project. [Here :arrow_forward:](docs/Milestones/5_API/5_Api.md)
+
+### 6. :electron: Service Composition
+
+Container cluster used with its respective image are defined. Additionally, the documentation and justification of the configuration of each of the containers that compose it have been carried out, as well as the step-by-step documentation of the composition file. On the other hand, since in previous milestones all tests and functionalities were built, it has been verified that these pass correctly. [Here :arrow_forward:](docs/Milestones/6_Orchestration/6_Orchestration.md)
+
+
 ## :hammer: Tools used for development
 
 ### Programming Languages
