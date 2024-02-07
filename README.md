@@ -47,7 +47,7 @@ The main goal of this project milestone is to add continuous integration (CI) to
 
 ### 5. 📖 Microservices
 
-Choice and justification of the different frameworks used for microservices are defined. A complete documentation and design of the API have been carried out, and a set of containers has been raised for the realization and visualization of logs using the Elastic Stack, as well as the continuation with the implementation of the project. [Here :arrow_forward:](docs/Milestones/5_API/5_Api.md)
+Choice and justification of the different frameworks used for microservices are defined. A complete documentation and design of the API have been carried out, and a set of containers has been raised for the realization and visualization of logs, as well as the continuation with the implementation of the project. [Here :arrow_forward:](docs/Milestones/5_API/5_Api.md)
 
 ### 6. :electron: Service Composition
 
