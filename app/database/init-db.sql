@@ -81,6 +81,29 @@ CREATE TABLE IF NOT EXISTS pneumiot.sensor_log (
     FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id)
 );
 
+CREATE TABLE IF NOT EXISTS pneumiot.permissions (
+    permission_id SERIAL NOT NULL,
+    permission_name VARCHAR(64) UNIQUE NOT NULL,
+    permission_description VARCHAR(128),
+    PRIMARY KEY(permission_id)
+);
+
+create table if not exists pneumiot.worker_role(
+	worker_role_id SERIAL not null,
+	worker_role_name VARCHAR(24),
+	worker_role_description VARCHAR(64),
+	primary key(worker_role_id)
+);
+
+CREATE TABLE IF NOT EXISTS pneumiot.role_permissions (
+    role_permission_id SERIAL NOT NULL,
+    worker_role_id INT NOT NULL,
+    permission_id INT NOT NULL,
+    PRIMARY KEY(role_permission_id),
+    FOREIGN KEY(worker_role_id) REFERENCES pneumiot.worker_role(worker_role_id) ON DELETE CASCADE,
+    FOREIGN KEY(permission_id) REFERENCES pneumiot.permissions(permission_id) ON DELETE CASCADE
+);
+
 -- Creation of the worker table --
 CREATE TABLE IF NOT EXISTS pneumiot.worker(
 	worker_id SERIAL not null,
@@ -88,8 +111,9 @@ CREATE TABLE IF NOT EXISTS pneumiot.worker(
     worker_email VARCHAR(64) NOT NULL,
     worker_name VARCHAR(20) NOT NULL,
     worker_surname VARCHAR(20) NOT NULL,
-    worker_role VARCHAR(20) NOT NULL,
-    PRIMARY KEY(worker_id)
+    worker_role_id int NOT NULL,
+    PRIMARY KEY(worker_id),
+    FOREIGN KEY(worker_role_id) REFERENCES pneumiot.worker_role(worker_role_id) 
 );
 
 -- Creation of the worker_auth table --
