@@ -1,25 +1,34 @@
--- Active: 1688058502640@@127.0.0.1@5432@PneumlOT@public
+-- Active: 1688058642640@@127.0.0.1@5432@PneumlOT@public
 
 DROP SCHEMA if EXISTS pneumiot CASCADE;
 
 CREATE SCHEMA IF NOT EXISTS pneumiot;
 
+
+Create table if not exists pneumiot.units(
+    unit_id Serial not null,
+    unit_abbreviation char(8) not null,
+    unit_description CHARACTER VARYING(64),
+    PRIMARY KEY(unit_id)
+);
+
 -- Creation of the sensor board --
 CREATE TABLE IF NOT EXISTS pneumiot.sensor(
     sensor_id SERIAL not null,
-    sensor_code CHARACTER VARYING(50) NOT NULL,
-    sensor_type CHARACTER VARYING(50) NOT NULL,
-    sensor_units CHARACTER VARYING(50) NOT NULL,
+    sensor_code CHARACTER VARYING(64) NOT NULL,
+    sensor_type CHARACTER VARYING(64) NOT NULL,
+    unit_id int NOT NULL,
     min_value numeric(4,2) NOT NULL,
     max_value numeric(4,2) NOT NULL,
-    PRIMARY KEY(sensor_id)
+    PRIMARY KEY(sensor_id),
+    FOREIGN KEY(unit_id) REFERENCES pneumiot.units(unit_id)
 );
 
 
 -- Creation of the board table --
 CREATE TABLE IF NOT EXISTS pneumiot.board(
     board_id SERIAL NOT NULL,
-    board_code CHARACTER VARYING(50) NOT null ,
+    board_code CHARACTER VARYING(64) NOT null,
     PRIMARY KEY(board_id)
 );
 
@@ -66,7 +75,7 @@ CREATE TABLE IF NOT EXISTS pneumiot.sensor_log (
     log_id SERIAL NOT NULL,
     board_id int not null,
     sensor_id int NOT NULL,
-    log_message CHARACTER VARYING(250),
+    log_message CHARACTER VARYING(264),
     PRIMARY KEY(log_id),
     FOREIGN KEY (board_id) REFERENCES pneumiot.board(board_id),
     FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id)
@@ -75,8 +84,8 @@ CREATE TABLE IF NOT EXISTS pneumiot.sensor_log (
 -- Creation of the worker table --
 CREATE TABLE IF NOT EXISTS pneumiot.worker(
 	worker_id SERIAL not null,
-    worker_dni VARCHAR(50) UNIQUE NOT NULL,
-    worker_email VARCHAR(50) NOT NULL,
+    worker_dni VARCHAR(64) UNIQUE NOT NULL,
+    worker_email VARCHAR(64) NOT NULL,
     worker_name VARCHAR(20) NOT NULL,
     worker_surname VARCHAR(20) NOT NULL,
     worker_role VARCHAR(20) NOT NULL,
@@ -95,7 +104,7 @@ CREATE TABLE IF NOT EXISTS pneumiot.worker_auth(
 CREATE TABLE IF NOT EXISTS pneumiot.worker_log(
     log_id Serial UNIQUE NOT NULL,
     worker_id INT NOT NULL,
-    log_message VARCHAR(250) NOT NULL,
+    log_message VARCHAR(264) NOT NULL,
     PRIMARY KEY(log_id),
     FOREIGN KEY (worker_id) REFERENCES pneumiot.worker(worker_id)
 );
@@ -110,6 +119,13 @@ CREATE TABLE IF NOT EXISTS pneumiot.doctor (
     FOREIGN KEY (patient_id) REFERENCES pneumiot.patient(patient_id)
 );
 
+create table if not exists pneumiot.index_rate(
+    index_rate_id SERIAL NOT NULL,
+    rate CHARACTER VARYING(32) NOT NULL,
+    rate_description CHARACTER VARYING(128) NOT NULL,
+    PRIMARY KEY(index_rate_id)
+);
+
 -- Creation of the hourly_average table --
 CREATE TABLE IF NOT EXISTS pneumiot.hourly_average(
     hourly_average_id SERIAL NOT NULL,
@@ -117,12 +133,14 @@ CREATE TABLE IF NOT EXISTS pneumiot.hourly_average(
     board_id int not null,
     sensor_id int NOT NULL,
     average_measure numeric(4,2) NOT NULL,
+    index_rate_id int not null,
     hour_time int NOT NULL,
     day_date date NOT NULL,
     PRIMARY KEY(hourly_average_id),
     FOREIGN KEY (patient_id) REFERENCES pneumiot.patient(patient_id),
     FOREIGN KEY (board_id) REFERENCES pneumiot.board(board_id),
-    FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id)
+    FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id),
+    FOREIGN KEY (index_rate_id) REFERENCES pneumiot.index_rate(index_rate_id)
 );
 
 -- Creation of the daily_average table --
@@ -132,12 +150,14 @@ CREATE TABLE IF NOT EXISTS pneumiot.daily_average(
     board_id int not null,
     sensor_id int not null,
     average_measure numeric(4,2) NOT NULL,
+    index_rate_id int not null,
     daily_day int NOT NULL,
     month_id int NOT NULL,
     PRIMARY KEY(daily_average_id),
     FOREIGN KEY (patient_id) REFERENCES pneumiot.patient(patient_id),
     FOREIGN KEY (board_id) REFERENCES pneumiot.board(board_id),
-    FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id)
+    FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id),
+    FOREIGN KEY (index_rate_id) REFERENCES pneumiot.index_rate(index_rate_id)
 );
 
 -- Creation of the monthly_average table --
@@ -147,17 +167,19 @@ CREATE TABLE IF NOT EXISTS pneumiot.monthly_average(
     board_id int not null,
     sensor_id int not null,
     average_measure numeric(4,2) NOT NULL,
+    index_rate_id int not null,
     month_number int NOT NULL,
     year_date int NOT NULL,
     PRIMARY KEY(monthly_average_id),
     FOREIGN KEY (patient_id) REFERENCES pneumiot.patient(patient_id),
     FOREIGN KEY (board_id) REFERENCES pneumiot.board(board_id),
-    FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id)
+    FOREIGN KEY (sensor_id) REFERENCES pneumiot.sensor(sensor_id),
+    FOREIGN KEY (index_rate_id) REFERENCES pneumiot.index_rate(index_rate_id)
 );
 
 -- Creation of the error_log table -- 
 CREATE TABLE IF NOT EXISTS pneumiot.error_log (
     log_id SERIAL NOT NULL,
-    log_message CHARACTER VARYING(250),
+    log_message CHARACTER VARYING(264),
     PRIMARY KEY(log_id)
 );
